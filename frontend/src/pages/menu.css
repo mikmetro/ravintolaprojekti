@@ -3,7 +3,6 @@
   display: grid;
   max-width: 800px;
   width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(800px, 1fr));
   justify-self: center;
   gap: 1em;
 }
@@ -31,8 +30,10 @@
 }
 
 .menu-item-price {
-  font-size: 1rem;
+  font-size: 1.1rem;
+  align-self: center;
   font-weight: 500;
+  margin-left: auto;
 }
 
 .menu-item-description {

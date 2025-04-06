@@ -1,3 +1,4 @@
+import React from 'react';
 import './menu.css';
 
 const mockData = {
@@ -34,6 +35,7 @@ const mockData = {
 };
 
 export default function Menu() {
+  // TODO: Menu item olisi erillinen komponentti.
   return (
     <section className="menu-wrapper">
       {Object.entries(mockData).map(([k, v]) => {
@@ -42,13 +44,13 @@ export default function Menu() {
             <h2 className="menu-category-title">{k}</h2>
             <div className="menu-category-items">
               {Object.entries(v).map(([itemName, {description, price}]) => (
-                <>
+                <React.Fragment key={itemName}>
                   <div>
                     <p className="menu-item-name">{itemName}</p>
                     <p className="menu-item-description">{description}</p>
                   </div>
                   <p className="menu-item-price">{price}€</p>
-                </>
+                </React.Fragment>
               ))}
             </div>
           </div>

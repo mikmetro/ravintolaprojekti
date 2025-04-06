@@ -11,6 +11,12 @@ header {
   border-right: 1px solid gray;
 }
 
+.header-logo-wrapper {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
 .header-link {
   cursor: pointer;
   align-self: center;

@@ -1,0 +1,26 @@
+.profile-wrapper {
+  padding: 2em;
+  justify-self: center;
+  max-width: 1000px;
+  width: 100%;
+  font-family: 'Montserrat';
+  display: grid;
+  gap: 2em;
+}
+
+.profile-details {
+  display: flex;
+  font-size: 2rem;
+  font-weight: 500;
+  gap: 1em;
+  align-items: center;
+}
+
+.profile-details-image {
+  border-radius: 50%;
+}
+
+.profile-orders-title {
+  text-decoration: underline;
+  font-size: 2rem;
+}
