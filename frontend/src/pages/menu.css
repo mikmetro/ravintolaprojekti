@@ -64,3 +64,17 @@
 .menu-category-cart:hover {
   background: #00ee00;
 }
+
+.menu-order-modal:modal {
+  position: fixed;
+  inset: 4em;
+  border: none;
+  width: 100%;
+  height: 100%;
+  max-width: unset;
+  max-height: unset;
+}
+
+.menu-order-modal::backdrop {
+  backdrop-filter: brightness(0.3);
+}

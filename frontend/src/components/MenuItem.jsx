@@ -8,7 +8,12 @@ export default function MenuItem(props) {
         <p className="menu-item-description">{props.description}</p>
       </div>
       <p className="menu-item-price">{props.price}€</p>
-      <button className="menu-category-cart">Lisää koriin</button>
+      <button
+        className="menu-category-cart"
+        onClick={() => props.setSelectedItem(props.itemName)}
+      >
+        Lisää koriin
+      </button>
     </>
   );
 }

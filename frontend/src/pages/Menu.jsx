@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './menu.css';
 import MenuItem from '../components/MenuItem';
+import OrderItemModal from '../components/OrderItemModal';
 
 const mockData = {
   Pizza: {
@@ -36,7 +37,8 @@ const mockData = {
 };
 
 export default function Menu() {
-  // TODO: Menu item olisi erillinen komponentti.
+  const [selectedItem, setSelectedItem] = useState(null);
+
   return (
     <section className="menu-wrapper">
       {Object.entries(mockData).map(([k, v]) => {
@@ -49,6 +51,7 @@ export default function Menu() {
                   itemName={itemName}
                   description={description}
                   price={price}
+                  setSelectedItem={setSelectedItem}
                   key={i}
                 />
               ))}
@@ -56,6 +59,7 @@ export default function Menu() {
           </div>
         );
       })}
+      <OrderItemModal selectedItem={selectedItem} />
     </section>
   );
 }
