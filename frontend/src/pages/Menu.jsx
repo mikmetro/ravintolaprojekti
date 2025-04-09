@@ -1,5 +1,6 @@
 import React from 'react';
 import './menu.css';
+import MenuItem from '../components/MenuItem';
 
 const mockData = {
   Pizza: {
@@ -43,14 +44,13 @@ export default function Menu() {
           <div key={k} className="menu-category">
             <h2 className="menu-category-title">{k}</h2>
             <div className="menu-category-items">
-              {Object.entries(v).map(([itemName, {description, price}]) => (
-                <React.Fragment key={itemName}>
-                  <div>
-                    <p className="menu-item-name">{itemName}</p>
-                    <p className="menu-item-description">{description}</p>
-                  </div>
-                  <p className="menu-item-price">{price}€</p>
-                </React.Fragment>
+              {Object.entries(v).map(([itemName, {description, price}], i) => (
+                <MenuItem
+                  itemName={itemName}
+                  description={description}
+                  price={price}
+                  key={i}
+                />
               ))}
             </div>
           </div>
