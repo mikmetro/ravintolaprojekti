@@ -1,5 +1,6 @@
 import mysql from 'mysql2';
 import 'dotenv/config';
+import fs from 'fs';
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -9,7 +10,19 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
+  multipleStatements: true
 });
 
 const promisePool = pool.promise();
+
+promisePool.query(fs.readFileSync('./utils/init_db.sql', 'utf8'))
+  .then(() => console.info('Database connected & initialized successfully.'))
+  .catch(err => {
+    if (err.code === 'ER_TABLE_EXISTS_ERROR') { // shit ass design, it shouldn't be an error really.
+      console.info('Database connected. (Tables already exist)');
+    } else {
+      console.error('error while creating the db:', err.message);
+    }
+  });
+console.info('Database connected & initialized.');
 export default promisePool;

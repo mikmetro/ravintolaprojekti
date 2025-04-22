@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { findUserByUsername } from '../models/user-model.js';
+import { findUserByEmail as findUserByUsername } from '../models/user-model.js';
 
 const login = async (req, res, next) => {
   try {
@@ -19,23 +19,21 @@ const login = async (req, res, next) => {
       error.status = 401;
       throw error;
     }
-    
-    const userWithoutPassword = {
-      user_id: user.user_id,
-      name: user.name,
-      username: user.username,
+
+    const payload = {
+      id: user.id,
       email: user.email,
-      role: user.role
+      role: user.role,
+      name: user.name
     };
-    
     const token = jwt.sign(
-      userWithoutPassword,
+      payload,
       process.env.JWT_SECRET,
       { expiresIn: '24h' }
     );
-    
+
     res.json({
-      user: userWithoutPassword,
+      user: payload,
       token
     });
   } catch (error) {
