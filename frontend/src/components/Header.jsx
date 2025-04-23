@@ -11,7 +11,10 @@ export default function Header() {
         Ruokalista
       </a>
       <a className="header-link" href="profile">
-        Oma tili
+        Profiili
+      </a>
+      <a className="header-link" href="admin">
+        Hallintasivu
       </a>
       <button className="header-cart">
         <IoCartOutline />

@@ -1,4 +1,4 @@
-import './profile.css';
+import '../css/profile.css';
 
 export default function Profile() {
   return (

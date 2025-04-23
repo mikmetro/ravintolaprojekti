@@ -1,0 +1,51 @@
+.ui-button {
+  border: 2px solid black;
+  color: black;
+  height: 100%;
+  background: transparent;
+  border-radius: 4px;
+  padding: 0.4em 0.8em;
+  max-height: 3em;
+  font-family: 'Montserrat';
+  align-self: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.1s;
+}
+
+.ui-button.green {
+  border: 2px solid var(--green);
+}
+
+.ui-button.green:hover {
+  background: var(--green);
+}
+
+.ui-button.yellow {
+  border: 2px solid var(--yellow);
+}
+
+.ui-button.yellow:hover {
+  background: var(--yellow);
+}
+
+.ui-button.red {
+  border: 2px solid var(--red);
+}
+
+.ui-button.red:hover {
+  background: var(--red);
+}
+
+.ui-input {
+  border-radius: 4px;
+  padding: 0.4em;
+  font-size: 1.1rem;
+  font-family: 'Montserrat';
+  border: 2px solid black;
+  outline: none;
+}
+
+.ui-input:focus {
+  border: 2px solid var(--green);
+}

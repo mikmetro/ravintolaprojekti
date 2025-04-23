@@ -5,9 +5,9 @@ const Layout = () => (
   <div>
     <Header />
     <main>
-      <Outlet /> {/* Child routes render here */}
+      <Outlet />
     </main>
-    <footer>{/* Footer content */}</footer>
+    <footer></footer>
   </div>
 );
 
