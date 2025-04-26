@@ -4,7 +4,8 @@
   max-width: 1000px;
   width: 100%;
   font-family: 'Montserrat';
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 2em;
 }
 
@@ -23,4 +24,8 @@
 .profile-orders-title {
   text-decoration: underline;
   font-size: 2rem;
+}
+
+.profile-control {
+  margin-top: auto;
 }

@@ -50,6 +50,10 @@
   border: 2px solid var(--green);
 }
 
+.ui-input:user-invalid {
+  border: 2px solid var(--red);
+}
+
 .ui-spinner {
   display: flex;
   width: fit-content;

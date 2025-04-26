@@ -1,9 +1,10 @@
 .menu-wrapper {
   padding: 1em;
-  display: grid;
+  display: flex;
   max-width: 800px;
   width: 100%;
   justify-self: center;
+  flex-direction: column;
   gap: 1em;
 }
 

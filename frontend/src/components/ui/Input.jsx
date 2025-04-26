@@ -1,3 +1,5 @@
-export default function Input({type}) {
-  return <input className="ui-input" type={type ?? 'text'}></input>;
+export default function Input(props) {
+  return (
+    <input className="ui-input" type={props.type ?? 'text'} {...props}></input>
+  );
 }

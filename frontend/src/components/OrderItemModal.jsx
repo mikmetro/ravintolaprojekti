@@ -1,6 +1,6 @@
 import {useRef, useEffect, useState} from 'react';
 import Spinner from './ui/Spinner';
-import useSpinner from '../hooks/useSpinner';
+import useSpinner from '../hooks/useSpinner.js';
 import Button from './ui/Button';
 import TextArea from './ui/TextArea';
 

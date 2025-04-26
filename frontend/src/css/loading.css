@@ -1,0 +1,9 @@
+.privateroute-loading {
+  position: fixed;
+  inset: 0;
+  background: white;
+  font-family: 'Montserrat';
+  display: grid;
+  place-items: center;
+  font-size: 5rem;
+}

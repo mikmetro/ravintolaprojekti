@@ -1,6 +1,14 @@
 import '../css/profile.css';
+import Button from '../components/ui/Button';
+import {useNavigate} from 'react-router-dom';
 
 export default function Profile() {
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.removeItem('token');
+    navigate('/');
+  };
+
   return (
     <section className="profile-wrapper">
       <div className="profile-details">
@@ -12,6 +20,11 @@ export default function Profile() {
       </div>
       <div className="profile-orders">
         <h2 className="profile-orders-title">Tilaukseni</h2>
+      </div>
+      <div className="profile-control">
+        <Button color="red" className="profile-logout" onClick={logout}>
+          Logout
+        </Button>
       </div>
     </section>
   );
