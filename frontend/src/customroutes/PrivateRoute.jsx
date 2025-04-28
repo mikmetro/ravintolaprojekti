@@ -1,24 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
 import '../css/loading.css';
-import {isTokenValid} from '../hooks/useAuth';
+import useUserContext from '../hooks/contextproviders/useUserContext';
 
 export default function PrivateRoute() {
-  console.log(localStorage.getItem('token'));
-
   const navigate = useNavigate();
   const location = useLocation();
   const [loading, setLoading] = useState(true);
+  const {refreshUser} = useUserContext();
 
   useEffect(() => {
     (async () => {
-      const isAuthenticated = await isTokenValid();
+      const isAuthenticated = await refreshUser();
 
-      if (!isAuthenticated) {
-        navigate('/login');
-      } else {
-        navigate(location.pathname);
-      }
+      navigate(isAuthenticated ? location.pathname : '/login');
+
       setLoading(false);
     })();
   }, []);

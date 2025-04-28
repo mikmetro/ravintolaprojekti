@@ -15,7 +15,7 @@ async function registerUser(credentials) {
     body: JSON.stringify({...credentials}),
   };
   const registerResult = await fetchUsersData('/', fetchOptions);
-  console.log(registerResult);
+  return registerResult;
 }
 
 export {registerUser};

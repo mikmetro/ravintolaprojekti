@@ -35,6 +35,7 @@
 
 .ui-button.red:hover {
   background: var(--red);
+  color: white;
 }
 
 .ui-input {

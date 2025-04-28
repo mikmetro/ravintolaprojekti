@@ -1,8 +1,8 @@
-import {NavLink} from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import {useState} from 'react';
-import {registerUser} from '../hooks/useUser';
+import useUserContext from '../hooks/contextproviders/useUserContext';
 
 export default function Register() {
   const [formFields, setFormFields] = useState({
@@ -11,13 +11,19 @@ export default function Register() {
     phone: '',
     password: '',
   });
+  const navigate = useNavigate();
+  const {handleRegister, user} = useUserContext();
 
   const handleFormInput = (key, value) =>
     setFormFields({...formFields, [key]: value});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await registerUser(formFields);
+    const registerResult = await handleRegister(formFields);
+    console.log(registerResult, user);
+    if (registerResult.statusCode === 200) {
+      navigate('/profile');
+    }
   };
 
   return (

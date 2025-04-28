@@ -3,7 +3,7 @@ import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import '../css/auth.css';
 import {useState} from 'react';
-import {loginUser} from '../hooks/useAuth';
+import useUserContext from '../hooks/contextproviders/useUserContext';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -12,17 +12,17 @@ export default function Login() {
     password: '',
   });
   const [errorMessage, setErrorMessage] = useState(null);
+  const {handleLogin} = useUserContext();
 
   const handleFormInput = (key, value) =>
     setFormFields({...formFields, [key]: value});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const loginResult = await loginUser(formFields);
+    const loginResult = await handleLogin(formFields);
     if (loginResult.statusCode !== 200 && loginResult.error)
       setErrorMessage('Invalid credentials!');
     else if (loginResult.statusCode === 200) {
-      localStorage.setItem('token', loginResult.token);
       navigate('/profile');
     }
   };

@@ -1,13 +1,10 @@
 import '../css/profile.css';
 import Button from '../components/ui/Button';
-import {useNavigate} from 'react-router-dom';
+import useUserContext from '../hooks/contextproviders/useUserContext';
 
 export default function Profile() {
-  const navigate = useNavigate();
-  const logout = () => {
-    localStorage.removeItem('token');
-    navigate('/');
-  };
+  const {user, handleLogout} = useUserContext();
+  console.log(user);
 
   return (
     <section className="profile-wrapper">
@@ -22,7 +19,7 @@ export default function Profile() {
         <h2 className="profile-orders-title">Tilaukseni</h2>
       </div>
       <div className="profile-control">
-        <Button color="red" className="profile-logout" onClick={logout}>
+        <Button color="red" className="profile-logout" onClick={handleLogout}>
           Logout
         </Button>
       </div>

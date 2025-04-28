@@ -8,7 +8,7 @@ async function fetchAuthData(endpoint, options = {}) {
   return json;
 }
 
-async function isTokenValid() {
+async function checkCurrentToken() {
   const token = localStorage.getItem('token');
   if (!token) return false;
   const fetchOptions = {
@@ -17,8 +17,7 @@ async function isTokenValid() {
     },
   };
   const tokenResult = await fetchAuthData('/me', fetchOptions);
-  console.log(tokenResult);
-  return tokenResult.statusCode === 200;
+  return tokenResult;
 }
 
 async function loginUser(credentials) {
@@ -31,4 +30,4 @@ async function loginUser(credentials) {
   return loginResult;
 }
 
-export {isTokenValid, loginUser};
+export {checkCurrentToken, loginUser};
