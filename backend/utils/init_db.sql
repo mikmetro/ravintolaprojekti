@@ -46,7 +46,8 @@ CREATE TABLE IF NOT EXISTS items (
 );
 
 CREATE TABLE order_item (
-    order_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    order_item_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    order_id,
     item_id INTEGER,
     quantity INTEGER,
     item_price DECIMAL(10,2),
