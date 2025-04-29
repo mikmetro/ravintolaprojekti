@@ -28,26 +28,38 @@ const useItem = () => {
   };
 
   const postItem = async (props) => {
+    const token = localStorage.getItem('token');
     const fetchOptions = {
       method: 'POST',
-      headers: {'content-type': 'application/json'},
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer: ${token}`,
+      },
       body: JSON.stringify({...props}),
     };
     const postResult = await fetchItemData('/', fetchOptions);
     return postResult;
   };
   const deleteItem = async (id) => {
+    const token = localStorage.getItem('token');
     const fetchOptions = {
       method: 'DELETE',
-      headers: {'content-type': 'application/json'},
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer: ${token}`,
+      },
     };
     const item = await fetchItemData('/' + id, fetchOptions);
     return item;
   };
   const putItem = async (props, id) => {
+    const token = localStorage.getItem('token');
     const fetchOptions = {
       method: 'PUT',
-      headers: {'content-type': 'application/json'},
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer: ${token}`,
+      },
       body: JSON.stringify({...props}),
     };
     const postResult = await fetchItemData('/' + id, fetchOptions);
