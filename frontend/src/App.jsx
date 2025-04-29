@@ -10,6 +10,7 @@ import Menu from './pages/Menu';
 import Profile from './pages/Profile';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
+import EditMenu from './pages/EditMenu';
 import Register from './pages/Register';
 import PrivateRoute from './customroutes/PrivateRoute';
 import {UserProvider} from './contexts/UserContext';
@@ -27,6 +28,7 @@ function App() {
               <Route path="register" element={<Register />} />
               <Route path="profile" element={<Profile />} />
               <Route path="admin" element={<Admin />} />
+              <Route path="editMenu" element={<EditMenu />} />
             </Route>
           </Route>
         </Routes>
