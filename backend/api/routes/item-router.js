@@ -1,0 +1,46 @@
+import express from "express";
+import { body } from "express-validator";
+import {
+  getItems,
+  getItemById,
+  postItem,
+  putItem,
+  deleteItem,
+} from "../controllers/item-controller.js";
+import { authenticateToken, isAdmin, validationErrors } from "../../middlewares.js";
+
+const itemRouter = express.Router();
+
+itemRouter.route("/").get(authenticateToken, getItems);
+
+itemRouter
+  .route("/")
+  .post(
+    authenticateToken,
+    isAdmin,
+    body("name").trim().isLength({ min: 1, max: 255 }).escape(),
+    body("description").optional().trim().isLength({ max: 1000 }).escape(),
+    body("price").isDecimal({ decimal_digits: '1,2' }).toFloat(),
+    body("status").optional().isIn(['active', 'inactive']),
+    validationErrors,
+    postItem
+  );
+
+itemRouter.route("/:id").get(authenticateToken, getItemById);
+
+itemRouter
+  .route("/:id")
+  .put(
+    authenticateToken,
+    isAdmin,
+    body("name").optional().trim().isLength({ min: 1, max: 255 }).escape(),
+    body("description").optional().trim().isLength({ max: 1000 }).escape(),
+    body("price").optional().isDecimal({ decimal_digits: '1,2' }).toFloat(),
+    body("status").optional().isIn(['active', 'inactive']),
+    validationErrors,
+    putItem
+  );
+
+itemRouter.route("/:id").delete(authenticateToken, isAdmin, deleteItem);
+
+export default itemRouter;
