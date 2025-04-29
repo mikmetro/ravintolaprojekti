@@ -12,9 +12,20 @@
 .profile-details {
   display: flex;
   font-size: 2rem;
+  flex-direction: column;
   font-weight: 500;
-  gap: 1em;
-  align-items: center;
+  gap: 0.5em;
+  align-items: flex-start;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.profile-details-item {
+  font-size: 1.5rem;
+  margin-top: 0.3em;
+}
+.profile-details-info {
+  font-size: 1rem;
 }
 
 .profile-details-image {
@@ -28,4 +39,11 @@
 
 .profile-control {
   margin-top: auto;
+}
+
+.profile-edit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
 }
