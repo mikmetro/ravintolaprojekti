@@ -1,54 +1,32 @@
-import React, {useState} from 'react';
+import {useState, useEffect} from 'react';
 import '../css/menu.css';
 import MenuItem from '../components/MenuItem';
 import OrderItemModal from '../components/OrderItemModal';
-
-const mockData = {
-  Pizza: {
-    Pepperoni: {
-      description: 'Pepperoni, Red onion',
-      price: 9.99,
-    },
-    Kebab: {
-      description: 'Kebab, Red onion',
-      price: 9.99,
-    },
-    'Special Opera': {
-      description: 'Garlic',
-      price: 39.99,
-    },
-  },
-  Kebab: {
-    'Kebab Ranskalaisilla': {
-      description: 'Kebab Ranskalaisilla',
-      price: 999.99,
-    },
-    'Kebab Riisillä': {
-      description: 'Kebab riisillä',
-      price: 999.99,
-    },
-  },
-  Juomat: {
-    'Cola 1,5l': {
-      description: '',
-      price: 41.99,
-    },
-  },
-};
+import {useItem} from '../hooks/useItem';
 
 export default function Menu() {
   const [selectedItem, setSelectedItem] = useState(null);
+  const [menuData, setMenuData] = useState({});
+  const {getItems} = useItem();
+
+  useEffect(() => {
+    (async () => {
+      const menuData = await getItems();
+      setMenuData(menuData.data);
+      console.log(menuData.data);
+    })();
+  }, []);
 
   return (
     <section className="menu-wrapper">
-      {Object.entries(mockData).map(([k, v]) => {
+      {Object.entries(menuData).map(([k, v]) => {
         return (
           <div key={k} className="menu-category">
             <h2 className="menu-category-title">{k}</h2>
             <div className="menu-category-items">
-              {Object.entries(v).map(([itemName, {description, price}], i) => (
+              {Object.values(v).map(({name, description, price}, i) => (
                 <MenuItem
-                  itemName={itemName}
+                  itemName={name}
                   description={description}
                   price={price}
                   setSelectedItem={setSelectedItem}

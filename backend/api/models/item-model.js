@@ -3,7 +3,7 @@ import promisePool from "../../utils/database.js";
 const listAllItems = async () => {
   try {
     const [rows] = await promisePool.query(`
-      SELECT id, name, description, price, status 
+      SELECT id, name, description, category, price, status 
       FROM items
       ORDER BY id DESC
     `);
@@ -13,11 +13,33 @@ const listAllItems = async () => {
   }
 };
 
+const listMenu = async () => {
+  try {
+    const [rows] = await promisePool.query(`
+      SELECT items.id, items.name, description, categories.name as category, price 
+      FROM items
+      JOIN categories
+      ON items.category = categories.id
+      WHERE categories.status = "active"
+      AND items.status = "active"
+      ORDER BY items.id DESC
+    `);
+    const rowsByCategory = rows.reduce((acc, row) => {
+      const { category, ...newItem } = row;
+      const previousItems = acc[category] ?? [];
+      return { ...acc, [category]: [...previousItems, newItem] };
+    }, {});
+    return rowsByCategory;
+  } catch (error) {
+    throw new Error(`Failed to fetch items: ${error.message}`);
+  }
+};
+
 const findItemById = async (id) => {
   try {
     const [rows] = await promisePool.execute(
       `
-      SELECT id, name, description, price, status 
+      SELECT id, name, description, category, price, status 
       FROM items 
       WHERE id = ?
     `,
@@ -124,6 +146,7 @@ const removeItem = async (id) => {
 
 export {
   listAllItems,
+  listMenu,
   findItemById,
   addItem,
   modifyItem,

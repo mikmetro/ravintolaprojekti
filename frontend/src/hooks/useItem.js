@@ -4,8 +4,11 @@ const useItem = () => {
       `${import.meta.env.VITE_ITEMS_API}${endpoint}`,
       options
     );
-    const json = await response.json();
-    json.statusCode = response.status;
+    const data = await response.json();
+    const json = {
+      statusCode: response.status,
+      data,
+    };
     return json;
   }
 
