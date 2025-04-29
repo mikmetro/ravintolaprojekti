@@ -45,9 +45,9 @@ CREATE TABLE IF NOT EXISTS items (
     status ENUM('active', 'inactive')
 );
 
-CREATE TABLE order_item (
+CREATE TABLE IF NOT EXISTS order_item (
     order_item_id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    order_id,
+    order_id INTEGER,
     item_id INTEGER,
     quantity INTEGER,
     item_price DECIMAL(10,2),
