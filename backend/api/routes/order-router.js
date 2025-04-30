@@ -5,18 +5,19 @@ import {
   getOrder,
   getMyOrders,
   getAllActiveOrders,
-  updateOrder
+  updateOrder,
 } from "../controllers/order-controller.js";
 import {
   authenticateToken,
   isAdmin,
-  isEmployee,
-  validationErrors
+  /*isEmployee,*/
+  validationErrors,
 } from "../../middlewares.js";
 
 const orderRouter = express.Router();
 
-orderRouter.route("/")
+orderRouter
+  .route("/")
   .post(
     authenticateToken,
     body("country").trim().isLength({ min: 1, max: 100 }),
@@ -35,20 +36,27 @@ orderRouter.route("/")
     placeOrder
   );
 
-orderRouter.route("/my-orders")
-  .get(authenticateToken, getMyOrders);
+orderRouter.route("/my-orders").get(authenticateToken, getMyOrders);
 
-orderRouter.route("/active")
+orderRouter
+  .route("/active")
   .get(authenticateToken, isAdmin, getAllActiveOrders);
 
-orderRouter.route("/:id")
-  .get(authenticateToken, getOrder);
+orderRouter.route("/:id").get(authenticateToken, getOrder);
 
-orderRouter.route("/:id")
+orderRouter
+  .route("/:id")
   .put(
     authenticateToken,
     isAdmin,
-    body("status").isIn(["pending", "paid", "preparing", "delivering", "completed", "cancelled"]),
+    body("status").isIn([
+      "pending",
+      "paid",
+      "preparing",
+      "delivering",
+      "completed",
+      "cancelled",
+    ]),
     validationErrors,
     updateOrder
   );
