@@ -57,11 +57,11 @@ const findItemById = async (id) => {
 
 const addItem = async (item) => {
   try {
-    const { name, description, price, status } = item;
-
+    const { name, description, price, status, category } = item;
+    console.log(item);
     const [result] = await promisePool.execute(
-      "INSERT INTO items (name, description, price, status) VALUES (?, ?, ?, ?)",
-      [name, description, price, status || "active"] // ENUMS: check /utils/init_db.sql
+      "INSERT INTO items (name, description, price, category, status) VALUES (?, ?, ?, ?, ?)",
+      [name, description, price, category, status || "active"] // ENUMS: check /utils/init_db.sql
     );
 
     return {
@@ -144,6 +144,19 @@ const removeItem = async (id) => {
   }
 };
 
+const listAllCategories = async () => {
+  try {
+    const [rows] = await promisePool.query(`
+      SELECT id, name, status 
+      FROM categories
+      ORDER BY id DESC
+    `);
+    return rows;
+  } catch (error) {
+    throw new Error(`Failed to fetch items: ${error.message}`);
+  }
+};
+
 export {
   listAllItems,
   listMenu,
@@ -151,4 +164,5 @@ export {
   addItem,
   modifyItem,
   removeItem,
+  listAllCategories,
 };

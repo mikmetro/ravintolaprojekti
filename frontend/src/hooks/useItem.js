@@ -69,7 +69,16 @@ const useItem = () => {
     return postResult;
   };
 
-  return {getItems, getItemById, postItem, deleteItem, putItem};
+  const getCategories = async () => {
+    const fetchOptions = {
+      method: 'GET',
+      headers: {'content-type': 'application/json'},
+    };
+    const items = await fetchItemData('/categories', fetchOptions);
+    return items;
+  };
+
+  return {getItems, getItemById, postItem, deleteItem, putItem, getCategories};
 };
 
 export {useItem};

@@ -5,6 +5,7 @@ import {
   modifyItem,
   removeItem,
   listMenu,
+  listAllCategories,
 } from "../models/item-model.js";
 
 const getItems = async (req, res, next) => {
@@ -42,12 +43,13 @@ const getItemById = async (req, res, next) => {
 
 const postItem = async (req, res, next) => {
   try {
-    const { name, description, price, status } = req.body;
+    const { name, description, price, status, category } = req.body;
 
     const result = await addItem({
       name,
       description,
       price,
+      category,
       status: status || "active",
     });
 
@@ -122,4 +124,21 @@ const deleteItem = async (req, res, next) => {
   }
 };
 
-export { getItems, getItemById, postItem, putItem, deleteItem, getMenu };
+const getCategories = async (req, res, next) => {
+  try {
+    const items = await listAllCategories();
+    res.json(items);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export {
+  getItems,
+  getItemById,
+  postItem,
+  putItem,
+  deleteItem,
+  getMenu,
+  getCategories,
+};
