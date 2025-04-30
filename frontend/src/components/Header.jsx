@@ -16,6 +16,9 @@ export default function Header() {
       <a className="header-link" href="admin">
         Hallintasivu
       </a>
+      <a className="header-link" href="shoppingcart">
+        Ostoskori
+      </a>
       <button className="header-cart">
         <IoCartOutline />
       </button>
