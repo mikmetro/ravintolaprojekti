@@ -14,24 +14,31 @@ export default function EditMenu() {
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [menuData, setMenuData] = useState({});
-  const {getItems} = useItem();
+  const {getAllItems} = useItem();
 
+  const loadMenuData = async () => {
+    const menuData = await getAllItems();
+    setMenuData(menuData.data);
+    console.log(menuData.data);
+  };
   useEffect(() => {
-    (async () => {
-      const menuData = await getItems();
-      setMenuData(menuData.data);
-      console.log(menuData.data);
-    })();
+    loadMenuData();
   }, []);
 
   return (
     <section className="menu-wrapper">
       <Button onClick={() => setShowAdd(true)}>Lisää tuote</Button>
-      {showAdd && <AddItemModal onClose={() => setShowAdd(false)} />}
+      {showAdd && (
+        <AddItemModal
+          onClose={() => setShowAdd(false)}
+          refreshMenu={loadMenuData}
+        />
+      )}
       {showEdit && (
         <EditItemModal
           selectedItem={selectedItem}
           onClose={() => setShowEdit(false)}
+          refreshMenu={loadMenuData}
         />
       )}
       {Object.entries(menuData).map(([k, v]) => {
@@ -49,6 +56,7 @@ export default function EditMenu() {
                   category={k}
                   itemId={id}
                   key={i}
+                  refreshMenu={loadMenuData}
                 />
               ))}
             </div>

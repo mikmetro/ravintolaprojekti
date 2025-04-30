@@ -4,7 +4,7 @@ import Input from './ui/Input.jsx';
 import Button from './ui/Button';
 import SelectCategory from './ui/SelectCategory.jsx';
 
-export default function AddItemModal({onClose}) {
+export default function AddItemModal(props) {
   const {postItem} = useItem();
   const initValues = {
     name: '',
@@ -17,7 +17,8 @@ export default function AddItemModal({onClose}) {
   const addItem = async () => {
     console.log(inputs);
     const postResult = await postItem(inputs);
-    onClose();
+    props.refreshMenu();
+    props.onClose();
     console.log('postResult', postResult);
   };
   const {inputs, handleInputChange, handleSubmit} = useForm(
@@ -74,7 +75,7 @@ export default function AddItemModal({onClose}) {
       </form>
       <Button
         onClick={() => {
-          onClose();
+          props.onClose();
         }}
       >
         Peruuta
