@@ -24,13 +24,13 @@ export default function Menu() {
           <div key={k} className="menu-category">
             <h2 className="menu-category-title">{k}</h2>
             <div className="menu-category-items">
-              {Object.values(v).map(({name, description, price}, i) => (
+              {Object.values(v).map(({name, description, price, id}) => (
                 <MenuItem
                   itemName={name}
                   description={description}
                   price={price}
-                  setSelectedItem={setSelectedItem}
-                  key={i}
+                  setSelectedItem={() => setSelectedItem(id)}
+                  key={id}
                 />
               ))}
             </div>
