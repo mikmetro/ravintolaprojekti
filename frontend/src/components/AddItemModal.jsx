@@ -2,6 +2,7 @@ import {useItem} from '../hooks/useItem.js';
 import useForm from '../hooks/formHooks.js';
 import Input from './ui/Input.jsx';
 import Button from './ui/Button';
+import SelectCategory from './ui/SelectCategory.jsx';
 
 export default function AddItemModal({onClose}) {
   const {postItem} = useItem();
@@ -46,13 +47,7 @@ export default function AddItemModal({onClose}) {
           />
         </div>
         <div>
-          <label htmlFor="addCategory">Kategoria</label>
-          <Input
-            name="category"
-            type="text"
-            id="addCategory"
-            onChange={handleInputChange}
-          />
+          <SelectCategory onChange={handleInputChange} />
         </div>
         <div>
           <label htmlFor="addDescription">Kuvaus</label>

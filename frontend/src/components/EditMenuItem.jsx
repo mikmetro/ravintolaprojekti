@@ -4,6 +4,7 @@ import {useItem} from '../hooks/useItem.js';
 
 export default function EditMenuItem(props) {
   const {deleteItem} = useItem();
+
   return (
     <>
       <div>
@@ -15,7 +16,7 @@ export default function EditMenuItem(props) {
         <Button
           color="green"
           onClick={() => {
-            props.setSelectedItem(props.itemId);
+            props.setSelectedItem(props);
             props.setShowEdit(true);
           }}
         >
