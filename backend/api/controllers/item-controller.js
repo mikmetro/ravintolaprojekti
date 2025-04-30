@@ -6,6 +6,8 @@ import {
   removeItem,
   listMenu,
   listAllCategories,
+  modifyCategory,
+  findCategoryById,
 } from "../models/item-model.js";
 
 const getItems = async (req, res, next) => {
@@ -133,6 +135,35 @@ const getCategories = async (req, res, next) => {
   }
 };
 
+const putCategory = async (req, res, next) => {
+  try {
+    const item = await findCategoryById(req.params.id);
+
+    if (!item) {
+      const error = new Error("Category not found");
+      error.status = 404;
+      throw error;
+    }
+
+    const itemData = { ...req.body };
+
+    const result = await modifyCategory(itemData, req.params.id);
+
+    if (!result.success) {
+      const error = new Error(result.details);
+      error.status = 400;
+      throw error;
+    }
+
+    res.json({
+      message: "Category updated successfully",
+      details: result.details,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   getItems,
   getItemById,
@@ -141,4 +172,5 @@ export {
   deleteItem,
   getMenu,
   getCategories,
+  putCategory,
 };

@@ -8,6 +8,7 @@ import {
   putItem,
   deleteItem,
   getCategories,
+  putCategory,
 } from "../controllers/item-controller.js";
 import {
   authenticateToken,
@@ -18,6 +19,7 @@ import {
 const itemRouter = express.Router();
 
 itemRouter.route("/categories").get(getCategories);
+itemRouter.route("/categories/:id").put(putCategory);
 itemRouter.route("/").get(getMenu);
 itemRouter.route("/all").get(getItems);
 

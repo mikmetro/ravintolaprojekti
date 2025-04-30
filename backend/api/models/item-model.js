@@ -176,6 +176,67 @@ const listAllCategories = async () => {
   }
 };
 
+const findCategoryById = async (id) => {
+  try {
+    const [rows] = await promisePool.execute(
+      `
+      SELECT id, name, status 
+      FROM categories 
+      WHERE id = ?
+    `,
+      [id]
+    );
+
+    if (rows.length === 0) {
+      return null;
+    }
+    return rows[0];
+  } catch (error) {
+    throw new Error(`Failed to find category with ID ${id}: ${error.message}`);
+  }
+};
+
+const modifyCategory = async (item, id) => {
+  try {
+    let sql = "UPDATE categories SET ";
+    const params = [];
+    const keys = Object.keys(item);
+
+    if (keys.length === 0) {
+      throw new Error("No fields provided for update?");
+    }
+
+    keys.forEach((key, index) => {
+      sql += `${key} = ?`;
+      params.push(item[key]);
+      if (index < keys.length - 1) {
+        sql += ", ";
+      }
+    });
+
+    sql += " WHERE id = ?";
+    params.push(id);
+
+    const [result] = await promisePool.execute(sql, params);
+
+    if (result.affectedRows === 0) {
+      return {
+        success: false,
+        details: `Category with ID ${id} not found`,
+      };
+    }
+
+    return {
+      success: true,
+      details: `Category with ID ${id} updated successfully`,
+    };
+  } catch (error) {
+    throw new Error(
+      `Failed to modify category with ID ${id}: ${error.message}`
+    );
+  }
+};
+
 export {
   listAllItems,
   listMenu,
@@ -184,4 +245,6 @@ export {
   modifyItem,
   removeItem,
   listAllCategories,
+  findCategoryById,
+  modifyCategory,
 };

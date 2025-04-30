@@ -85,6 +85,19 @@ const useItem = () => {
     const items = await fetchItemData('/categories', fetchOptions);
     return items;
   };
+  const putCategory = async (props, id) => {
+    const token = localStorage.getItem('token');
+    const fetchOptions = {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer: ${token}`,
+      },
+      body: JSON.stringify({...props}),
+    };
+    const postResult = await fetchItemData('/categories/' + id, fetchOptions);
+    return postResult;
+  };
 
   return {
     getItems,
@@ -94,6 +107,7 @@ const useItem = () => {
     deleteItem,
     putItem,
     getCategories,
+    putCategory,
   };
 };
 
