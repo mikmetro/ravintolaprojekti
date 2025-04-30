@@ -2,16 +2,21 @@ import express from "express";
 import { body } from "express-validator";
 import {
   getItems,
+  getMenu,
   getItemById,
   postItem,
   putItem,
   deleteItem,
 } from "../controllers/item-controller.js";
-import { authenticateToken, isAdmin, validationErrors } from "../../middlewares.js";
+import {
+  authenticateToken,
+  isAdmin,
+  validationErrors,
+} from "../../middlewares.js";
 
 const itemRouter = express.Router();
 
-itemRouter.route("/").get(authenticateToken, getItems);
+itemRouter.route("/").get(getMenu);
 
 itemRouter
   .route("/")
@@ -20,8 +25,8 @@ itemRouter
     isAdmin,
     body("name").trim().isLength({ min: 1, max: 255 }).escape(),
     body("description").optional().trim().isLength({ max: 1000 }).escape(),
-    body("price").isDecimal({ decimal_digits: '1,2' }).toFloat(),
-    body("status").optional().isIn(['active', 'inactive']),
+    body("price").isDecimal({ decimal_digits: "1,2" }).toFloat(),
+    body("status").optional().isIn(["active", "inactive"]),
     validationErrors,
     postItem
   );
@@ -35,8 +40,8 @@ itemRouter
     isAdmin,
     body("name").optional().trim().isLength({ min: 1, max: 255 }).escape(),
     body("description").optional().trim().isLength({ max: 1000 }).escape(),
-    body("price").optional().isDecimal({ decimal_digits: '1,2' }).toFloat(),
-    body("status").optional().isIn(['active', 'inactive']),
+    body("price").optional().isDecimal({ decimal_digits: "1,2" }).toFloat(),
+    body("status").optional().isIn(["active", "inactive"]),
     validationErrors,
     putItem
   );
