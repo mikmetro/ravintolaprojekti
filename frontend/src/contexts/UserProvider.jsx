@@ -1,10 +1,9 @@
 // UserContext.jsx
-import {createContext, useState} from 'react';
+import {useState} from 'react';
 import {loginUser, checkCurrentToken} from '../hooks/useAuth';
 import {registerUser} from '../hooks/useUser';
 import {useNavigate} from 'react-router-dom';
-
-const UserContext = createContext(null);
+import {UserContext} from './Contexts';
 
 const UserProvider = ({children}) => {
   const [user, setUser] = useState(null);
@@ -55,4 +54,4 @@ const UserProvider = ({children}) => {
     </UserContext.Provider>
   );
 };
-export {UserProvider, UserContext};
+export default UserProvider;

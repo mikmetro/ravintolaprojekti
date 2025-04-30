@@ -13,25 +13,28 @@ import Login from './pages/Login';
 import EditMenu from './pages/EditMenu';
 import Register from './pages/Register';
 import PrivateRoute from './customroutes/PrivateRoute';
-import {UserProvider} from './contexts/UserContext';
+import UserProvider from './contexts/UserProvider';
+import CartProvider from './contexts/CartProvider';
 
 function App() {
   return (
     <BrowserRouter>
       <UserProvider>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="menu" element={<Menu />} />
-            <Route element={<PrivateRoute />}>
-              <Route path="login" element={<Login />} />
-              <Route path="register" element={<Register />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="admin" element={<Admin />} />
-              <Route path="editMenu" element={<EditMenu />} />
+        <CartProvider>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="menu" element={<Menu />} />
+              <Route element={<PrivateRoute />}>
+                <Route path="login" element={<Login />} />
+                <Route path="register" element={<Register />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="admin" element={<Admin />} />
+                <Route path="editMenu" element={<EditMenu />} />
+              </Route>
             </Route>
-          </Route>
-        </Routes>
+          </Routes>
+        </CartProvider>
       </UserProvider>
     </BrowserRouter>
   );
