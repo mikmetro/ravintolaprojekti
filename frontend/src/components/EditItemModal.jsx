@@ -20,7 +20,6 @@ export default function EditItemModal(props) {
   };
 
   const editItem = async () => {
-    console.log(inputs);
     const putResult = await putItem(inputs, props.selectedItem.itemId);
     props.refreshMenu();
     props.onClose();

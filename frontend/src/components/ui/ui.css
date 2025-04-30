@@ -93,3 +93,45 @@
   font-size: 1rem;
   min-height: 6em;
 }
+
+/*editMenu*/
+.ui-edit-menu-button {
+  border: 2px solid black;
+  color: black;
+  height: 100%;
+  background: transparent;
+  border-radius: 4px;
+  padding: 0.2em 0.4em;
+  max-height: 2em;
+  font-family: 'Montserrat';
+  align-self: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.1s;
+  width: 100%;
+}
+
+.ui-edit-menu-button.green {
+  border: 2px solid var(--green);
+}
+
+.ui-edit-menu-button.green:hover {
+  background: var(--green);
+}
+
+.ui-edit-menu-button.yellow {
+  border: 2px solid var(--yellow);
+}
+
+.ui-edit-menu-button.yellow:hover {
+  background: var(--yellow);
+}
+
+.ui-edit-menu-button.red {
+  border: 2px solid var(--red);
+}
+
+.ui-edit-menu-button.red:hover {
+  background: var(--red);
+  color: white;
+}

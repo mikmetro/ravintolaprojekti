@@ -8,7 +8,7 @@ export default function SelectCategory(props) {
     (async () => {
       const categories = await getCategories();
       setCategories(categories.data);
-      //console.log(categories.data);
+      console.log(categories);
     })();
   }, []);
 
