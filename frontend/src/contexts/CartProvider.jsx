@@ -10,6 +10,7 @@ const CartProvider = ({children}) => {
   }, []);
 
   useEffect(() => {
+    console.log(cartItems);
     saveCart();
   }, [cartItems]);
 
@@ -18,33 +19,24 @@ const CartProvider = ({children}) => {
   const saveCart = () =>
     localStorage.setItem('cart', JSON.stringify(cartItems));
 
-  const addItem = (itemId, quantity) => {
-    const newItem = (cartItems[itemId] ?? 0) + quantity;
-    setCartItems({...cartItems, newItem});
-  };
-
-  const subtractItem = (itemId, quantity) => {
-    if (!cartItems[itemId]) return;
-
+  const setItem = (itemId, quantity) => {
     const newCartItems = {...cartItems};
-    const newQuantity = newCartItems[itemId] - quantity;
-    if (newQuantity <= 0) delete newCartItems[itemId];
-    else newCartItems[itemId] = newQuantity;
-
+    if (quantity <= 0) delete newCartItems[itemId];
+    else newCartItems[itemId] = quantity;
     setCartItems(newCartItems);
   };
 
-  const removeItem = (itemId) => {
-    if (!cartItems[itemId]) return;
+  const removeItem = (itemId) => setItem(itemId, -1);
 
-    const newCartItems = {...cartItems};
-    delete newCartItems[itemId];
-    setCartItems(newCartItems);
-  };
+  const addItem = (itemId, quantity) =>
+    setItem(itemId, (cartItems[itemId] ?? 0) + quantity);
+
+  const subtractItem = (itemId, quantity) =>
+    setItem(itemId, (cartItems[itemId] ?? 0) - quantity);
 
   return (
     <CartContext.Provider
-      value={{cartItems, addItem, subtractItem, removeItem}}
+      value={{cartItems, addItem, subtractItem, removeItem, setItem}}
     >
       {children}
     </CartContext.Provider>
