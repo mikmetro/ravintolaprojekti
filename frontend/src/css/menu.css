@@ -53,20 +53,23 @@
   border: none;
   left: 50%;
   transform: translateX(-50%);
-  min-width: 400px;
+  width: 100%;
   min-height: 400px;
-  max-width: calc(100% - 8em);
+  max-width: 400px;
   max-height: calc(100% - 8em);
   border-radius: 0.25em;
   outline: none;
   border: none;
+  padding: unset;
   font-family: 'Montserrat';
 }
 
-dialog[open] {
+.menu-order-modal-spacer {
   display: flex;
   flex-direction: column;
   gap: 1em;
+  padding: 1em;
+  flex: 1;
 }
 
 .menu-order-modal::backdrop {
@@ -84,4 +87,20 @@ dialog[open] {
 .menu-order-modal-action {
   display: flex;
   justify-content: space-between;
+}
+
+.menu-order-modal-details {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr max-content;
+  gap: 0.2em;
+}
+
+.menu-order-modal-details > .menu-item-description {
+  grid-column: 1 / 3;
+}
+
+.menu-order-modal-details > .menu-item-price {
+  font-size: 1.3rem;
+  font-weight: 400;
 }
