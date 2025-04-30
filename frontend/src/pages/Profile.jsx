@@ -1,8 +1,8 @@
 import '../css/profile.css';
 import Button from '../components/ui/Button';
 import useUserContext from '../hooks/contextproviders/useUserContext';
-import {useState} from "react";
-import Input from "../components/ui/Input.jsx";
+import {useState} from 'react';
+import Input from '../components/ui/Input.jsx';
 
 export default function Profile() {
   const {user, handleLogout} = useUserContext();
@@ -16,22 +16,21 @@ export default function Profile() {
   });
 
   const handleChange = (e) => {
-    setEditData({ ...editData, [e.target.name]: e.target.value });
+    setEditData({...editData, [e.target.name]: e.target.value});
   };
 
   const handleSave = () => {
     // TODO Send the updated user data to backend
-    console.log("Saving data...\n", editData);
+    console.log('Saving data...\n', editData);
   };
 
-  const isUnchanged = (
+  const isUnchanged =
     editData.name === user.name &&
     editData.email === user.email &&
-    editData.phone === user.phone
-  );
+    editData.phone === user.phone;
 
   const handleCancel = () => {
-    setEditData({ name: user.name, email: user.email, phone: user.phone });
+    setEditData({name: user.name, email: user.email, phone: user.phone});
     setIsEditing(false);
   };
 
@@ -40,7 +39,7 @@ export default function Profile() {
       <div className="profile-details">
         {isEditing ? (
           <>
-            <div className="auth-item">
+            <div className="profile-details-info">
               <p>Name</p>
               <Input
                 name="name"
@@ -50,7 +49,7 @@ export default function Profile() {
                 onChange={handleChange}
               />
             </div>
-            <div className="auth-item">
+            <div className="profile-details-info">
               <p>Email</p>
               <Input
                 name="email"
@@ -59,7 +58,7 @@ export default function Profile() {
                 onChange={handleChange}
               />
             </div>
-            <div className="auth-item">
+            <div className="profile-details-info">
               <p>Phone Number</p>
               <Input
                 name="phone"
@@ -89,16 +88,29 @@ export default function Profile() {
       <div className="profile-edit">
         {isEditing ? (
           <>
-            <Button color="green" disabled={isUnchanged} onClick={handleSave} className="profile-save-button">
-              Save
-            </Button>
-            <Button color="red" onClick={handleCancel} className="profile-cancel-button">
+            <Button
+              color="red"
+              onClick={handleCancel}
+              className="profile-cancel-button"
+            >
               Cancel
+            </Button>
+            <Button
+              color="green"
+              disabled={isUnchanged}
+              onClick={handleSave}
+              className="profile-save-button"
+            >
+              Save
             </Button>
           </>
         ) : (
           <>
-            <Button color="black" onClick={() => setIsEditing(true)} className="profile-edit-button">
+            <Button
+              color="black"
+              onClick={() => setIsEditing(true)}
+              className="profile-edit-button"
+            >
               Edit Profile
             </Button>
           </>

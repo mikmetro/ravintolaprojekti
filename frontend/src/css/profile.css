@@ -16,16 +16,18 @@
   font-weight: 500;
   gap: 0.5em;
   align-items: flex-start;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .profile-details-item {
-  font-size: 1.5rem;
-  margin-top: 0.3em;
+  font-size: 1.2rem;
+  margin-top: 0.2em;
+  font-weight: 400;
 }
+
 .profile-details-info {
-  font-size: 1rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  width: 100%;
 }
 
 .profile-details-image {
@@ -43,7 +45,12 @@
 
 .profile-edit {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
   gap: 1em;
+}
+
+.profile-details-info > input {
+  display: block;
+  width: 100%;
+  max-width: 20rem;
 }
