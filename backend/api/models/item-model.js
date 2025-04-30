@@ -15,7 +15,7 @@ import promisePool from "../../utils/database.js";
 const listAllItems = async () => {
   try {
     const [rows] = await promisePool.query(`
-      SELECT items.id, items.name, description, categories.name as category, price 
+      SELECT items.id, items.name, description, categories.name as category, price, items.status, items.category as category_id 
       FROM items
       JOIN categories
       ON items.category = categories.id
