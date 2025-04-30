@@ -1,6 +1,6 @@
 import promisePool from "../../utils/database.js";
 
-const listAllItems = async () => {
+/*const listAllItems = async () => {
   try {
     const [rows] = await promisePool.query(`
       SELECT id, name, description, category, price, status 
@@ -8,6 +8,25 @@ const listAllItems = async () => {
       ORDER BY id DESC
     `);
     return rows;
+  } catch (error) {
+    throw new Error(`Failed to fetch items: ${error.message}`);
+  }
+};*/
+const listAllItems = async () => {
+  try {
+    const [rows] = await promisePool.query(`
+      SELECT items.id, items.name, description, categories.name as category, price 
+      FROM items
+      JOIN categories
+      ON items.category = categories.id
+      ORDER BY items.id DESC
+    `);
+    const rowsByCategory = rows.reduce((acc, row) => {
+      const { category, ...newItem } = row;
+      const previousItems = acc[category] ?? [];
+      return { ...acc, [category]: [...previousItems, newItem] };
+    }, {});
+    return rowsByCategory;
   } catch (error) {
     throw new Error(`Failed to fetch items: ${error.message}`);
   }

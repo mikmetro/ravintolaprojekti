@@ -19,6 +19,7 @@ const itemRouter = express.Router();
 
 itemRouter.route("/categories").get(getCategories);
 itemRouter.route("/").get(getMenu);
+itemRouter.route("/all").get(getItems);
 
 itemRouter
   .route("/")

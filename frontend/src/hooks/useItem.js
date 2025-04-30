@@ -20,6 +20,14 @@ const useItem = () => {
     const items = await fetchItemData('/', fetchOptions);
     return items;
   };
+  const getAllItems = async () => {
+    const fetchOptions = {
+      method: 'GET',
+      headers: {'content-type': 'application/json'},
+    };
+    const items = await fetchItemData('/all', fetchOptions);
+    return items;
+  };
 
   const getItemById = async (id) => {
     const fetchOptions = {
@@ -78,7 +86,15 @@ const useItem = () => {
     return items;
   };
 
-  return {getItems, getItemById, postItem, deleteItem, putItem, getCategories};
+  return {
+    getItems,
+    getAllItems,
+    getItemById,
+    postItem,
+    deleteItem,
+    putItem,
+    getCategories,
+  };
 };
 
 export {useItem};
