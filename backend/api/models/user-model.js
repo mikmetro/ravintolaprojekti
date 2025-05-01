@@ -154,4 +154,137 @@ export {
   addUser,
   modifyUser,
   removeUser,
+  listUserAddresses,
+  findAddressById,
+  addAddress,
+  modifyAddress,
+  removeAddress,
+};
+
+const listUserAddresses = async (userId) => {
+  try {
+    const [rows] = await promisePool.execute(
+      `
+      SELECT id, country, city, postalcode, street, door_code 
+      FROM addresses 
+      WHERE user_id = ?
+      ORDER BY id DESC
+    `,
+      [userId]
+    );
+    return rows;
+  } catch (error) {
+    throw new Error(
+      `Failed to fetch addresses for user ${userId}: ${error.message}`
+    );
+  }
+};
+
+const findAddressById = async (addressId) => {
+  try {
+    const [rows] = await promisePool.execute(
+      `
+      SELECT id, user_id, country, city, postalcode, street, door_code 
+      FROM addresses 
+      WHERE id = ?
+    `,
+      [addressId]
+    );
+
+    if (rows.length === 0) {
+      return null;
+    }
+    return rows[0];
+  } catch (error) {
+    throw new Error(
+      `Failed to find address with ID ${addressId}: ${error.message}`
+    );
+  }
+};
+
+const addAddress = async (addressData) => {
+  try {
+    const { userId, country, city, postalcode, street, doorCode } = addressData;
+
+    const [result] = await promisePool.execute(
+      `INSERT INTO addresses 
+       (user_id, country, city, postalcode, street, door_code) 
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      [userId, country, city, postalcode, street, doorCode]
+    );
+
+    return {
+      success: true,
+      id: result.insertId,
+      details: `Address created successfully with ID ${result.insertId}`,
+    };
+  } catch (error) {
+    throw new Error(`Failed to add address: ${error.message}`);
+  }
+};
+
+const modifyAddress = async (addressData, addressId) => {
+  try {
+    let sql = "UPDATE addresses SET ";
+    const params = [];
+    const keys = Object.keys(addressData);
+
+    if (keys.length === 0) {
+      throw new Error("No fields provided for update?");
+    }
+
+    keys.forEach((key, index) => {
+      sql += `${key} = ?`;
+      params.push(addressData[key]);
+      if (index < keys.length - 1) {
+        sql += ", ";
+      }
+    });
+
+    sql += " WHERE id = ?";
+    params.push(addressId);
+
+    const [result] = await promisePool.execute(sql, params);
+
+    if (result.affectedRows === 0) {
+      return {
+        success: false,
+        details: `Address with ID ${addressId} not found`,
+      };
+    }
+
+    return {
+      success: true,
+      details: `Address with ID ${addressId} updated successfully`,
+    };
+  } catch (error) {
+    throw new Error(
+      `Failed to modify address with ID ${addressId}: ${error.message}`
+    );
+  }
+};
+
+const removeAddress = async (addressId) => {
+  try {
+    const [result] = await promisePool.execute(
+      "DELETE FROM addresses WHERE id = ?",
+      [addressId]
+    );
+
+    if (result.affectedRows === 0) {
+      return {
+        success: false,
+        details: `Address with ID ${addressId} not found.`,
+      };
+    }
+
+    return {
+      success: true,
+      details: `Address with ID ${addressId} deleted successfully.`,
+    };
+  } catch (error) {
+    throw new Error(
+      `Failed to remove address with ID ${addressId}: ${error.message}`
+    );
+  }
 };

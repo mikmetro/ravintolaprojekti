@@ -6,6 +6,11 @@ import {
   addUser,
   modifyUser,
   removeUser,
+  listUserAddresses,
+  findAddressById,
+  addAddress,
+  modifyAddress,
+  removeAddress,
 } from "../models/user-model.js";
 
 const getUsers = async (req, res, next) => {
@@ -148,4 +153,178 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
-export { getUsers, getUserById, postUser, putUser, deleteUser };
+const getUserAddresses = async (req, res, next) => {
+  try {
+    const userId = parseInt(req.params.id);
+    if (userId !== req.user.id && req.user.role !== "admin") {
+      const error = new Error("Unauthorized");
+      error.status = 403;
+      throw error;
+    }
+    const addresses = await listUserAddresses(userId);
+    res.json(addresses);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getAddressById = async (req, res, next) => {
+  try {
+    const userId = parseInt(req.params.id);
+    const addressId = parseInt(req.params.addressId);
+
+    const address = await findAddressById(addressId);
+    if (!address) {
+      const error = new Error("Address not found");
+      error.status = 404;
+      throw error;
+    }
+
+    if (address.user_id !== userId) {
+      const error = new Error("Address does not belong to this user");
+      error.status = 403;
+      throw error;
+    }
+
+    if (userId !== req.user.id && req.user.role !== "admin") {
+      const error = new Error("Unauthorized");
+      error.status = 403;
+      throw error;
+    }
+
+    res.json(address);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const postAddress = async (req, res, next) => {
+  try {
+    const userId = parseInt(req.params.id);
+    if (userId !== req.user.id && req.user.role !== "admin") {
+      const error = new Error("Unauthorized to add address for this user");
+      error.status = 403;
+      throw error;
+    }
+
+    const { country, city, postalcode, street, doorCode } = req.body;
+
+    const result = await addAddress({
+      userId,
+      country,
+      city,
+      postalcode,
+      street,
+      doorCode: doorCode || null,
+    });
+
+    if (!result.success) {
+      const error = new Error("Failed to create address");
+      error.status = 500;
+      throw error;
+    }
+
+    res.status(201).json({
+      message: "Address created successfully",
+      id: result.id,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const putAddress = async (req, res, next) => {
+  try {
+    const userId = parseInt(req.params.id);
+    const addressId = parseInt(req.params.addressId);
+
+    const address = await findAddressById(addressId);
+    if (!address) {
+      const error = new Error("Address not found");
+      error.status = 404;
+      throw error;
+    }
+
+    if (address.user_id !== userId) {
+      const error = new Error("Address does not belong to this user");
+      error.status = 403;
+      throw error;
+    }
+
+    if (userId !== req.user.id && req.user.role !== "admin") {
+      const error = new Error("Unauthorized to modify this address");
+      error.status = 403;
+      throw error;
+    }
+
+    const addressData = { ...req.body };
+    const result = await modifyAddress(addressData, addressId);
+
+    if (!result.success) {
+      const error = new Error(result.details);
+      error.status = 400;
+      throw error;
+    }
+
+    res.json({
+      message: "Address updated successfully",
+      details: result.details,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteAddress = async (req, res, next) => {
+  try {
+    const userId = parseInt(req.params.id);
+    const addressId = parseInt(req.params.addressId);
+
+    const address = await findAddressById(addressId);
+    if (!address) {
+      const error = new Error("Address not found");
+      error.status = 404;
+      throw error;
+    }
+
+    if (address.user_id !== userId) {
+      const error = new Error("Address does not belong to this user");
+      error.status = 403;
+      throw error;
+    }
+
+    if (userId !== req.user.id && req.user.role !== "admin") {
+      const error = new Error("Unauthorized to delete this address");
+      error.status = 403;
+      throw error;
+    }
+
+    const result = await removeAddress(addressId);
+
+    if (!result.success) {
+      const error = new Error(result.details);
+      error.status = 400;
+      throw error;
+    }
+
+    res.json({
+      message: "Address deleted successfully",
+      details: result.details,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export {
+  getUsers,
+  getUserById,
+  postUser,
+  putUser,
+  deleteUser,
+  getUserAddresses,
+  getAddressById,
+  postAddress,
+  putAddress,
+  deleteAddress,
+};

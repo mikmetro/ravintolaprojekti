@@ -6,6 +6,11 @@ import {
   postUser,
   putUser,
   deleteUser,
+  getUserAddresses,
+  getAddressById,
+  postAddress,
+  putAddress,
+  deleteAddress,
 } from "../controllers/user-controller.js";
 import { authenticateToken, validationErrors } from "../../middlewares.js";
 
@@ -35,5 +40,34 @@ userRouter
     putUser
   )
   .delete(authenticateToken, deleteUser);
+
+userRouter
+  .route("/:id/addresses")
+  .get(authenticateToken, getUserAddresses)
+  .post(
+    authenticateToken,
+    body("country").trim().isLength({ min: 1, max: 100 }),
+    body("city").trim().isLength({ min: 1, max: 100 }),
+    body("postalcode").trim().isLength({ min: 1, max: 20 }),
+    body("street").trim().isLength({ min: 1, max: 255 }),
+    body("doorCode").optional().trim().isLength({ max: 50 }),
+    validationErrors,
+    postAddress
+  );
+
+userRouter
+  .route("/:id/addresses/:addressId")
+  .get(authenticateToken, getAddressById)
+  .put(
+    authenticateToken,
+    body("country").optional().trim().isLength({ min: 1, max: 100 }),
+    body("city").optional().trim().isLength({ min: 1, max: 100 }),
+    body("postalcode").optional().trim().isLength({ min: 1, max: 20 }),
+    body("street").optional().trim().isLength({ min: 1, max: 255 }),
+    body("doorCode").optional().trim().isLength({ max: 50 }),
+    validationErrors,
+    putAddress
+  )
+  .delete(authenticateToken, deleteAddress);
 
 export default userRouter;
