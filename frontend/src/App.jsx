@@ -12,6 +12,7 @@ import Admin from './pages/Admin';
 import Login from './pages/Login';
 import EditMenu from './pages/EditMenu';
 import Register from './pages/Register';
+import AdminOrders from './pages/AdminOrders';
 import PrivateRoute from './customroutes/PrivateRoute';
 import UserProvider from './contexts/UserProvider';
 import CartProvider from './contexts/CartProvider';
@@ -31,6 +32,7 @@ function App() {
                 <Route path="profile" element={<Profile />} />
                 <Route path="admin" element={<Admin />} />
                 <Route path="editMenu" element={<EditMenu />} />
+                <Route path="orders" element={<AdminOrders />} />
               </Route>
             </Route>
           </Routes>
