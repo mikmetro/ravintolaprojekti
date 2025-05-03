@@ -36,7 +36,7 @@ itemRouter
     postItem
   );
 
-itemRouter.route("/:id").get(authenticateToken, getItemById);
+itemRouter.route("/:id").get(getItemById);
 
 itemRouter
   .route("/:id")

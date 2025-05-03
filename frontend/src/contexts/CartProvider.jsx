@@ -1,16 +1,20 @@
 import {useEffect, useState} from 'react';
 import {CartContext} from './Contexts';
+import {useItem} from '../hooks/useItem';
 
 const CartProvider = ({children}) => {
   const [cartItems, setCartItems] = useState({});
+  const [cartPrice, setCartPrice] = useState(0);
+
+  const {getItemById} = useItem();
 
   useEffect(() => {
     setCartItems(loadCart());
-    console.log(cartItems);
   }, []);
 
   useEffect(() => {
-    console.log(cartItems);
+    console.log(cartPrice);
+    updatePrice();
     saveCart();
   }, [cartItems]);
 
@@ -19,10 +23,15 @@ const CartProvider = ({children}) => {
   const saveCart = () =>
     localStorage.setItem('cart', JSON.stringify(cartItems));
 
-  const setItem = (itemId, quantity) => {
+  const setItem = async (itemId, quantity) => {
     const newCartItems = {...cartItems};
+    if (!newCartItems[itemId]) {
+      const itemDetails = await getItemById(itemId);
+      console.log(itemDetails);
+      newCartItems[itemId] = {info: itemDetails.data};
+    }
     if (quantity <= 0) delete newCartItems[itemId];
-    else newCartItems[itemId] = quantity;
+    else newCartItems[itemId]['quantity'] = quantity;
     setCartItems(newCartItems);
   };
 
@@ -34,9 +43,17 @@ const CartProvider = ({children}) => {
   const subtractItem = (itemId, quantity) =>
     setItem(itemId, (cartItems[itemId] ?? 0) - quantity);
 
+  const updatePrice = () => {
+    const price = Object.values(cartItems).reduce(
+      (acc, item) => acc + item.price,
+      0
+    );
+    setCartPrice(price);
+  };
+
   return (
     <CartContext.Provider
-      value={{cartItems, addItem, subtractItem, removeItem, setItem}}
+      value={{cartPrice, cartItems, addItem, subtractItem, removeItem, setItem}}
     >
       {children}
     </CartContext.Provider>
