@@ -1,6 +1,6 @@
 import {useItem} from '../hooks/useItem.js';
 import useForm from '../hooks/formHooks.js';
-import Input from './ui/Input.jsx';
+import AdminInput from './ui/AdminInput.jsx';
 import Button from './ui/Button';
 import SelectCategory from './ui/SelectCategory.jsx';
 
@@ -29,36 +29,44 @@ export default function EditItemModal(props) {
     editItem,
     initValues
   );
+
   return (
-    <dialog open>
+    <dialog open className="admin-item-dialog">
       <h3>Muokkaa</h3>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="admin-item-form">
         <div>
           <label htmlFor="addName">Nimi</label>
-          <Input
+          <AdminInput
             name="name"
             type="text"
             id="addName"
             defaultValue={props.selectedItem.itemName}
             onChange={handleInputChange}
+            required
           />
         </div>
         <div>
           <label htmlFor="addPrice">Hinta</label>
-          <Input
+          <AdminInput
             name="price"
-            type="text"
+            type="number"
             id="addPrice"
             defaultValue={props.selectedItem.price}
             onChange={handleInputChange}
+            required
+            min="0"
+            step="0.01"
           />
         </div>
         <div>
-          <SelectCategory onChange={handleInputChange} />
+          <SelectCategory
+            onChange={handleInputChange}
+            initialValue={props.selectedItem.categoryId}
+          />
         </div>
         <div>
           <label htmlFor="addDescription">Kuvaus</label>
-          <Input
+          <AdminInput
             name="description"
             type="textarea"
             id="addDescription"
@@ -73,20 +81,22 @@ export default function EditItemModal(props) {
             id="addStatus"
             defaultValue="active"
             onChange={handleInputChange}
+            required
           >
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
           </select>
         </div>
-        <Button type="submit">Muokkaa</Button>
+        <button type="submit">Muokkaa</button>
       </form>
-      <Button
+      <button
         onClick={() => {
           props.onClose();
         }}
+        className="cancel-button"
       >
         Peruuta
-      </Button>
+      </button>
     </dialog>
   );
 }

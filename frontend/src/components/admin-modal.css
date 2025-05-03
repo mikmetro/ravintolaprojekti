@@ -1,0 +1,100 @@
+.admin-item-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  border-radius: 12px;
+  padding: 2em;
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  background: #fff;
+  font-family: 'Montserrat', sans-serif;
+  z-index: 1000;
+}
+
+/* Heading */
+.admin-item-dialog h3 {
+  font-size: 1.6rem;
+  margin: 0 0 1em;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 0.5em;
+  color: #222;
+}
+
+/* Form layout */
+.admin-item-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+}
+
+.admin-item-form > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-item-form label {
+  font-weight: 600;
+  margin-bottom: 0.4em;
+  color: #444;
+}
+
+/* Inputs and selects */
+.admin-item-form input,
+.admin-item-form select {
+  padding: 0.6em;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+/* Submit Button (Green style) */
+.admin-item-form button[type='submit'] {
+  border: 2px solid var(--green, #28a745);
+  color: black;
+  background: transparent;
+  border-radius: 4px;
+  padding: 0.4em 0.8em;
+  font-family: 'Montserrat';
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+  align-self: flex-start;
+}
+
+.admin-item-form button[type='submit']:hover {
+  background: var(--green, #28a745);
+}
+
+/* Cancel Button (Red style) */
+.admin-item-dialog .cancel-button {
+  border: 2px solid var(--red, #dc3545);
+  color: black;
+  background: transparent;
+  border-radius: 4px;
+  padding: 0.4em 0.8em;
+  font-family: 'Montserrat';
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+  align-self: flex-start;
+  margin-top: 1em;
+}
+
+.admin-item-dialog .cancel-button:hover {
+  background: var(--red, #dc3545);
+  color: white;
+}
+
+.admin-item-dialog .button-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  margin-top: 2em;
+}

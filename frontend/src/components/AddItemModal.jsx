@@ -1,8 +1,9 @@
 import {useItem} from '../hooks/useItem.js';
 import useForm from '../hooks/formHooks.js';
-import Input from './ui/Input.jsx';
+import AdminInput from './ui/AdminInput.jsx';
 import Button from './ui/Button';
 import SelectCategory from './ui/SelectCategory.jsx';
+import './admin-modal.css';
 
 export default function AddItemModal(props) {
   const {postItem} = useItem();
@@ -26,25 +27,29 @@ export default function AddItemModal(props) {
     initValues
   );
   return (
-    <dialog open>
+    <dialog open className="admin-item-dialog">
       <h3>Lisää tuote</h3>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="admin-item-form">
         <div>
           <label htmlFor="addName">Nimi</label>
-          <Input
+          <AdminInput
             name="name"
             type="text"
             id="addName"
             onChange={handleInputChange}
+            required
           />
         </div>
         <div>
           <label htmlFor="addPrice">Hinta</label>
-          <Input
+          <AdminInput
             name="price"
-            type="text"
+            type="number"
             id="addPrice"
             onChange={handleInputChange}
+            required
+            min="0"
+            step="0.01"
           />
         </div>
         <div>
@@ -52,7 +57,7 @@ export default function AddItemModal(props) {
         </div>
         <div>
           <label htmlFor="addDescription">Kuvaus</label>
-          <Input
+          <AdminInput
             name="description"
             type="text"
             id="addDescription"
@@ -66,20 +71,22 @@ export default function AddItemModal(props) {
             id="addStatus"
             defaultValue="active"
             onChange={handleInputChange}
+            required
           >
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
           </select>
         </div>
-        <Button type="submit">Lisää tuote</Button>
+        <button type="submit">Lisää tuote</button>
       </form>
-      <Button
+      <button
+        className="cancel-button"
         onClick={() => {
           props.onClose();
         }}
       >
         Peruuta
-      </Button>
+      </button>
     </dialog>
   );
 }

@@ -8,7 +8,6 @@ import '../css/edit-menu.css';
 import EditMenuButton from '../components/ui/EditMenuButton';
 export default function EditMenu() {
   const [selectedItem, setSelectedItem] = useState(null);
-  //const [showEdit, setShowEdit] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [menuData, setMenuData] = useState({});
@@ -59,28 +58,27 @@ export default function EditMenu() {
           refreshMenu={loadMenuData}
         />
       )}
-      {Object.entries(menuData).map(([k, v]) => {
-        const matchedCategory = categories.find(
-          (category) => category.name === k
-        );
-        if (!matchedCategory) return null;
+      {categories.map((category) => {
+        const items = menuData[category.name];
+        if (!items) return null;
+
         return (
-          <div key={k} className="edit-menu-category">
+          <div key={category.id} className="edit-menu-category">
             <div
               className={
-                matchedCategory.status === 'active'
+                category.status === 'active'
                   ? 'edit-menu-category-title active'
                   : 'edit-menu-category-title inactive'
               }
             >
-              <h2>{k}</h2>
-              {matchedCategory.status === 'active' ? (
+              <h2>{category.name}</h2>
+              {category.status === 'active' ? (
                 <>
                   <p>Käytössä</p>
                   <button
                     className="edit-menu-category-button red"
                     onClick={async () => {
-                      changeCategoryStatus(matchedCategory.id, 'inactive');
+                      changeCategoryStatus(category.id, 'inactive');
                     }}
                   >
                     Piilota kategoria
@@ -92,7 +90,7 @@ export default function EditMenu() {
                   <button
                     className="edit-menu-category-button green"
                     onClick={async () => {
-                      changeCategoryStatus(matchedCategory.id, 'active');
+                      changeCategoryStatus(category.id, 'active');
                     }}
                   >
                     Ota käyttöön
@@ -101,7 +99,7 @@ export default function EditMenu() {
               )}
             </div>
             <div className="edit-menu-category-items">
-              {Object.values(v).map(
+              {Object.values(items).map(
                 ({name, description, price, id, status, category_id}, i) => (
                   <EditMenuItem
                     itemName={name}
