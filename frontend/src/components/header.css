@@ -3,6 +3,7 @@ header {
   display: flex;
   gap: 1em;
   background: #eee;
+  position: relative;
 }
 
 .header-logo {
@@ -47,6 +48,7 @@ header {
   width: 3rem;
   height: 3rem;
   padding: 0.4rem;
+  z-index: 999;
 }
 
 .header-cart > svg {
@@ -57,4 +59,64 @@ header {
 
 .header-cart:hover > svg {
   color: #00dd00;
+}
+
+.header-cartmenu {
+  position: absolute;
+  background-color: #e7e7e7;
+  top: 100%;
+  height: calc(100dvh - 100%);
+  right: 0;
+  width: 0;
+  overflow: clip;
+  transition: width 0.2s;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Montserrat';
+}
+
+.header-cartmenu.open {
+  width: min(400px, 100dvw);
+}
+
+.header-cartmenu > * {
+  width: min(400px, 100dvw);
+}
+
+.header-cartmenu > button {
+  margin: 1em;
+  width: calc(min(400px, 100dvw) - 2em);
+}
+
+.header-cartmenu-items {
+  flex: 1;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  font-size: 1.2rem;
+}
+
+.header-cartmenu-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 0.5em;
+  background: #ddd;
+  border-radius: 4px;
+  padding: 0.5em;
+}
+
+.header-cartmenu-item-quantity {
+  font-weight: 600;
+}
+
+.header-cartmenu-item-price {
+  grid-column: 1 / 3;
+  justify-self: flex-end;
+}
+
+.header-cartmenu-total {
+  margin: 0 1em;
+  font-weight: 600;
+  font-size: 1.4rem;
 }

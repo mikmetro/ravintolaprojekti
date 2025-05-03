@@ -5,17 +5,19 @@ import {useItem} from '../hooks/useItem';
 const CartProvider = ({children}) => {
   const [cartItems, setCartItems] = useState({});
   const [cartPrice, setCartPrice] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const {getItemById} = useItem();
 
   useEffect(() => {
     setCartItems(loadCart());
+    setLoading(false);
   }, []);
 
   useEffect(() => {
-    console.log(cartPrice);
+    if (loading) return;
     updatePrice();
-    saveCart();
+    saveCart(cartItems);
   }, [cartItems]);
 
   const loadCart = () => JSON.parse(localStorage.getItem('cart')) ?? {};
@@ -27,7 +29,6 @@ const CartProvider = ({children}) => {
     const newCartItems = {...cartItems};
     if (!newCartItems[itemId]) {
       const itemDetails = await getItemById(itemId);
-      console.log(itemDetails);
       newCartItems[itemId] = {info: itemDetails.data};
     }
     if (quantity <= 0) delete newCartItems[itemId];
@@ -45,9 +46,10 @@ const CartProvider = ({children}) => {
 
   const updatePrice = () => {
     const price = Object.values(cartItems).reduce(
-      (acc, item) => acc + item.price,
+      (acc, item) => acc + +item.info.price * item.quantity,
       0
     );
+    console.log(price);
     setCartPrice(price);
   };
 

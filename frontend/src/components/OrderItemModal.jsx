@@ -10,7 +10,7 @@ export default function OrderItemModal({selectedItem, setSelectedItem}) {
   const [extraInstructions, setExtraInstructions] = useState('');
   const {setItem, cartItems} = useCartContext();
   const [orderQuantity, incrementValue, decrementValue] = useSpinner(
-    cartItems[selectedItem.id] ?? 1,
+    cartItems[selectedItem.id]?.quantity ?? 1,
     0,
     99
   );
