@@ -1,55 +1,42 @@
 import ShoppingCartRows from '../components/shoppingCartRows';
-console.log('shoppingCartRows');
-const mockData = {
-  Pizza: {
-    Pepperoni: {
-      description: 'Pepperoni, Red onion',
-      price: 9.99,
-    },
-    Kebab: {
-      description: 'Kebab, Red onion',
-      price: 9.99,
-    },
-    'Special Opera': {
-      description: 'Garlic',
-      price: 39.99,
-    },
-  },
-  Kebab: {
-    'Kebab Ranskalaisilla': {
-      description: 'Kebab Ranskalaisilla',
-      price: 999.99,
-    },
-    'Kebab Riisillä': {
-      description: 'Kebab riisillä',
-      price: 999.99,
-    },
-  },
-  Juomat: {
-    'Cola 1,5l': {
-      description: '',
-      price: 41.99,
-    },
-  },
-};
+import '../css/shoppingPage.css';
 
-//TODO: get data from context
-//TODO: send order to backend
+import '../css/Menu.css';
+import {CartContext} from '../contexts/Contexts';
+import useCartContext from '../hooks/contextproviders/useCartContext';
+import Button from '../components/ui/Button';
+
 function ShoppingCart() {
+  const {cartItems, cartPrice} = useCartContext();
+
   return (
-    <>
-      <table>
+    <div className="shopping-page-wrapper">
+      <table className="shopping-page-table">
         <thead>
           <tr>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
+            <th>Tuote</th>
+            <th>Hinta</th>
+            <th>Määrä</th>
           </tr>
         </thead>
-        <ShoppingCartRows item={mockData} />
+        <tbody>
+          {Object.values(cartItems).length === 0 ? (
+            <tr>
+              <td colSpan="3">No items in cart</td>
+            </tr>
+          ) : (
+            Object.values(cartItems).map(({quantity, info: item}) => (
+              <ShoppingCartRows key={item.id} item={item} quantity={quantity} />
+            ))
+          )}
+        </tbody>
       </table>
-      <button>Maksamaan</button>
-    </>
+      <div className="shopping-page-total">
+        <h2>Total:{cartPrice} €</h2>
+        <Button color="green"> Maksa </Button>
+      </div>
+    </div>
   );
 }
+
 export default ShoppingCart;

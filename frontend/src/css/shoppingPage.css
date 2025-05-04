@@ -1,0 +1,35 @@
+.shopping-page-wrapper {
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  max-width: 800px;
+  width: 100%;
+  justify-self: center;
+  font-family: 'Montserrat';
+}
+
+.shopping-page-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.shopping-page-table th,
+.shopping-page-table td {
+  border: 1px solid #ddd;
+  padding: 0.8em;
+  text-align: left;
+}
+
+.shopping-page-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.shopping-page-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.shopping-page-table tr:hover {
+  background-color: #f1f1f1;
+}
