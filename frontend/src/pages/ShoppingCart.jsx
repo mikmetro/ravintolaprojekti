@@ -1,8 +1,6 @@
 import ShoppingCartRows from '../components/shoppingCartRows';
 import '../css/shoppingPage.css';
-
 import '../css/Menu.css';
-import {CartContext} from '../contexts/Contexts';
 import useCartContext from '../hooks/contextproviders/useCartContext';
 import Button from '../components/ui/Button';
 
@@ -20,11 +18,13 @@ function ShoppingCart() {
           </tr>
         </thead>
         <tbody>
-          {Object.values(cartItems).length === 0 ? (
+          {Object.values(cartItems).length === 0 ? ( // If cart is empty
             <tr>
               <td colSpan="3">No items in cart</td>
             </tr>
           ) : (
+            // If cart is not empty
+            // Map through cart items and display them
             Object.values(cartItems).map(({quantity, info: item}) => (
               <ShoppingCartRows key={item.id} item={item} quantity={quantity} />
             ))
@@ -33,7 +33,9 @@ function ShoppingCart() {
       </table>
       <div className="shopping-page-total">
         <h2>Total:{cartPrice.toFixed(2)} €</h2>
-        <Button color="green"> Maksa </Button>
+        <Button color="green" onClick={() => console.log('clicked')}>
+          Maksa
+        </Button>
       </div>
     </div>
   );
