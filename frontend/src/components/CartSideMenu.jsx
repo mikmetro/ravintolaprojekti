@@ -24,7 +24,7 @@ export default function CartSideMenu({sideMenuOpen, setSideMenuOpen}) {
           </div>
         ))}
       </section>
-      <p className="header-cartmenu-total">Total: {cartPrice}€</p>
+      <p className="header-cartmenu-total">Total: {cartPrice.toFixed(2)}€</p>
       <Button color="green" onClick={handleClick}>
         Mene kassalle
       </Button>
