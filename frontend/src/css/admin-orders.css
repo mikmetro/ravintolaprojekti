@@ -1,0 +1,132 @@
+.admin-orders-wrapper {
+  padding: 1em;
+  display: flex;
+  max-width: 1000px;
+  width: 100%;
+  justify-self: center;
+  flex-direction: column;
+  gap: 1em;
+  font-family: 'Montserrat';
+}
+
+.admin-orders-wrapper table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+.admin-orders-wrapper th {
+  font-size: 1.2rem;
+}
+.admin-orders-wrapper tbody tr {
+  border: 2px solid #333; /* Darker border for visibility */
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5); /* Stronger shadow */
+}
+
+.admin-orders-wrapper tbody td {
+  padding: 1rem;
+  background-color: #fff;
+}
+
+.admin-orders-row-button-td {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.admin-orders-row-button-td h3 {
+  margin-bottom: 0.5rem;
+  align-self: center;
+  font-weight: 600;
+}
+
+.admin-orders-button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  align-self: center;
+  width: 100%;
+}
+
+.admin-orders-button-group + .admin-orders-button-group {
+  margin-top: 1rem; /* space between the two groups */
+}
+
+.status-buttons .admin-orders-button {
+  font-size: 0.9rem;
+  padding: 0.2em 0.4em;
+  opacity: 0.9;
+}
+
+/*buttons*/
+.admin-orders-button {
+  border: 2px solid black;
+  color: black;
+  height: 100%;
+  background: transparent;
+  padding: 0.2em 0.4em;
+  max-height: 2em;
+  font-family: 'Montserrat';
+  align-self: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.1s;
+  width: 100%;
+}
+
+.admin-orders-button.green {
+  border: 2px solid var(--green);
+  background-color: rgb(96, 247, 109);
+}
+
+.admin-orders-button.green:hover {
+  background: var(--green);
+}
+
+.admin-orders-button.red {
+  border: 2px solid var(--red);
+  background-color: rgb(245, 117, 117);
+}
+
+.admin-orders-button.red:hover {
+  background: var(--red);
+  color: white;
+}
+
+.admin-orders-button.complete {
+  border: 2px solid var(--green);
+  background-color: rgb(96, 247, 109);
+}
+
+.admin-orders-button.complete:hover {
+  background: var(--green);
+}
+
+.admin-orders-button.cancel {
+  border: 2px solid var(--red);
+  background-color: rgb(245, 117, 117);
+}
+
+.admin-orders-button.cancel:hover {
+  background: var(--red);
+  color: white;
+}
+
+.admin-orders-row-items {
+  width: 60%;
+}
+
+.status-buttons .admin-orders-button {
+  font-size: 0.9rem;
+  padding: 0.2em 0.4em;
+  opacity: 0.9;
+}
+.action-buttons .admin-orders-button {
+  font-weight: bold;
+  font-size: 0.9rem;
+  padding: 0.2em 0.1em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}

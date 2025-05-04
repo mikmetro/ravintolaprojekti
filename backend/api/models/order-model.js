@@ -2,26 +2,47 @@ import promisePool from "../../utils/database.js";
 
 const createOrder = async (orderData) => {
   const connection = await promisePool.getConnection();
-  
+
   try {
     await connection.beginTransaction();
-    
-    const { 
-      userId, country, city, postalcode, street, doorCode,
-      subTotal, discount, fee, total, type, items 
+
+    const {
+      userId,
+      country,
+      city,
+      postalcode,
+      street,
+      doorCode,
+      subTotal,
+      discount,
+      fee,
+      total,
+      type,
+      items,
     } = orderData;
-    
+
     const [orderResult] = await connection.execute(
       `INSERT INTO orders 
        (user_id, country, city, postalcode, street, door_code, 
         sub_total, discount, fee, total, type, status, created_at)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())`,
-      [userId, country, city, postalcode, street, doorCode, 
-       subTotal, discount, fee, total, type]
+      [
+        userId,
+        country,
+        city,
+        postalcode,
+        street,
+        doorCode,
+        subTotal,
+        discount,
+        fee,
+        total,
+        type,
+      ]
     );
-    
+
     const orderId = orderResult.insertId;
-    
+
     for (const item of items) {
       await connection.execute(
         `INSERT INTO order_item 
@@ -30,13 +51,13 @@ const createOrder = async (orderData) => {
         [orderId, item.id, item.quantity, item.price]
       );
     }
-    
+
     await connection.commit();
-    
+
     return {
       success: true,
       orderId,
-      message: 'Order created successfully'
+      message: "Order created successfully",
     };
   } catch (error) {
     await connection.rollback();
@@ -52,13 +73,13 @@ const getOrderById = async (id) => {
       `SELECT * FROM orders WHERE id = ?`,
       [id]
     );
-    
+
     if (orderRows.length === 0) {
       return null;
     }
-    
+
     const order = orderRows[0];
-    
+
     const [itemRows] = await promisePool.execute(
       `SELECT oi.*, i.name, i.description
        FROM order_item oi
@@ -66,10 +87,10 @@ const getOrderById = async (id) => {
        WHERE oi.order_id = ?`,
       [id]
     );
-    
+
     return {
       ...order,
-      items: itemRows
+      items: itemRows,
     };
   } catch (error) {
     throw new Error(`Failed to get order with ID ${id}: ${error.message}`);
@@ -82,10 +103,12 @@ const getUserOrders = async (userId) => {
       `SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC`,
       [userId]
     );
-    
+
     return rows;
   } catch (error) {
-    throw new Error(`Failed to get orders for user ${userId}: ${error.message}`);
+    throw new Error(
+      `Failed to get orders for user ${userId}: ${error.message}`
+    );
   }
 };
 
@@ -98,7 +121,7 @@ const getActiveOrders = async () => {
        WHERE o.status IN ('pending', 'paid', 'preparing', 'delivering')
        ORDER BY o.created_at ASC`
     );
-    
+
     for (let i = 0; i < rows.length; i++) {
       const [itemRows] = await promisePool.execute(
         `SELECT oi.*, i.name
@@ -107,10 +130,10 @@ const getActiveOrders = async () => {
          WHERE oi.order_id = ?`,
         [rows[i].id]
       );
-      
+
       rows[i].items = itemRows;
     }
-    
+
     return rows;
   } catch (error) {
     throw new Error(`Failed to get active orders: ${error.message}`);
@@ -123,17 +146,17 @@ const updateOrderStatus = async (id, status) => {
       `UPDATE orders SET status = ? WHERE id = ?`,
       [status, id]
     );
-    
+
     if (result.affectedRows === 0) {
       return {
         success: false,
-        message: `Order with ID ${id} not found`
+        message: `Order with ID ${id} not found`,
       };
     }
-    
+
     return {
       success: true,
-      message: `Order status updated to ${status}`
+      message: `Order status updated to ${status}`,
     };
   } catch (error) {
     throw new Error(`Failed to update order status: ${error.message}`);
@@ -145,5 +168,5 @@ export {
   getOrderById,
   getUserOrders,
   getActiveOrders,
-  updateOrderStatus
+  updateOrderStatus,
 };

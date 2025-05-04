@@ -110,27 +110,27 @@ INSERT INTO orders (
 ) VALUES
 -- Order 1: Delivery, paid
 (1, 'Finland', 'Helsinki', '00100', 'Mannerheimintie 12', 'A12',
- 35.00, 5.00, 3.50, 33.50, 'delivery', 'paid', '2025-05-01 14:23:45'),
+ 35.00, 5.00, 3.50, 33.50, 'delivery', 'paid', '2025-05-05 02:03:00'),
 
 -- Order 2: Pickup, completed
 (2, 'Finland', 'Espoo', '02150', 'Länsiväylä 88', NULL,
- 22.00, 0.00, 0.00, 22.00, 'pickup', 'completed', '2025-04-28 18:40:00'),
+ 22.00, 0.00, 0.00, 22.00, 'pickup', 'completed', '2025-05-05 02:00:00'),
 
 -- Order 3: Delivery, cancelled
 (3, 'Finland', 'Vantaa', '01300', 'Tikkurilantie 30', 'B2',
- 18.50, 2.50, 3.00, 19.00, 'delivery', 'cancelled', '2025-05-02 10:10:10'),
+ 18.50, 2.50, 3.00, 19.00, 'delivery', 'cancelled', '2025-05-05 00:25:20'),
 
 -- Order 4: Delivery, pending
 (4, 'Finland', 'Tampere', '33100', 'Hämeenkatu 55', NULL,
- 42.00, 0.00, 4.00, 46.00, 'delivery', 'pending', '2025-05-03 09:00:00'),
+ 42.00, 0.00, 4.00, 46.00, 'delivery', 'pending', '2025-05-05 01:50:00'),
 
 -- Order 5: Pickup, preparing
 (1, 'Finland', 'Helsinki', '00500', 'Sturenkatu 16', NULL,
- 30.00, 0.00, 0.00, 30.00, 'pickup', 'preparing', '2025-05-03 12:15:30'),
+ 30.00, 0.00, 0.00, 30.00, 'pickup', 'preparing', '2025-05-04 23:00:00'),
 
 -- Order 6: Delivery, delivering
 (5, 'Finland', 'Turku', '20100', 'Yliopistonkatu 4', 'C4',
- 27.00, 3.00, 2.50, 26.50, 'delivery', 'delivering', '2025-05-02 19:45:00');
+ 27.00, 3.00, 2.50, 26.50, 'delivery', 'delivering', '2025-05-04 19:45:00');
 
 
  -- order_item
