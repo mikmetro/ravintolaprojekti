@@ -15,11 +15,15 @@ export default function ShoppingCartRows(props) {
   );
 
   const handleIncrement = () => {
+    // Increment the quantity
+    if (quantity >= 99) return; // Prevent incrementing beyond 99
     incrementValue();
     setItem(cartItem.id, quantity + 1);
   };
 
   const handleDecrement = () => {
+    // Decrement the quantity
+    if (quantity <= 1) return; // Prevent decrementing below 1
     decrementValue();
     setItem(cartItem.id, quantity - 1);
   };
@@ -35,7 +39,18 @@ export default function ShoppingCartRows(props) {
             incrementValue={handleIncrement}
             decrementValue={handleDecrement}
           />
-          <Button color="red" onClick={() => setItem(cartItem.id, 0)}>
+          <Button
+            color="red"
+            onClick={() => {
+              if (
+                confirm(
+                  'Are you sure you want to remove this item from the cart?'
+                )
+              ) {
+                setItem(cartItem.id, 0);
+              }
+            }}
+          >
             Poista
           </Button>
         </div>
