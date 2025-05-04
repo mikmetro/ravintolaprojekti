@@ -32,7 +32,7 @@ function ShoppingCart() {
         </tbody>
       </table>
       <div className="shopping-page-total">
-        <h2>Total:{cartPrice} €</h2>
+        <h2>Total:{cartPrice.toFixed(2)} €</h2>
         <Button color="green"> Maksa </Button>
       </div>
     </div>
