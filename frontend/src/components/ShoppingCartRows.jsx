@@ -2,6 +2,7 @@ import useSpinner from '../hooks/useSpinner';
 import Spinner from './ui/Spinner';
 import useCartContext from '../hooks/contextproviders/useCartContext';
 import Button from './ui/Button';
+import '../css/shoppingPage.css';
 
 export default function ShoppingCartRows(props) {
   const cartItem = props.item;
@@ -28,14 +29,16 @@ export default function ShoppingCartRows(props) {
       <td>{cartItem.name}</td>
       <td>{cartItem.price}</td>
       <td>
-        <Spinner
-          value={quantity}
-          incrementValue={handleIncrement}
-          decrementValue={handleDecrement}
-        />
-        <Button color="red" onClick={() => setItem(cartItem.id, 0)}>
-          Poista
-        </Button>
+        <div className="shopping-cart-actions">
+          <Spinner
+            value={quantity}
+            incrementValue={handleIncrement}
+            decrementValue={handleDecrement}
+          />
+          <Button color="red" onClick={() => setItem(cartItem.id, 0)}>
+            Poista
+          </Button>
+        </div>
       </td>
     </tr>
   );

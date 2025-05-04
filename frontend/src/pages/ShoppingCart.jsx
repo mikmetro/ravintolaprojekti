@@ -15,7 +15,7 @@ function ShoppingCart() {
         <thead>
           <tr>
             <th>Tuote</th>
-            <th>Hinta</th>
+            <th>Hinta/kpl</th>
             <th>Määrä</th>
           </tr>
         </thead>
