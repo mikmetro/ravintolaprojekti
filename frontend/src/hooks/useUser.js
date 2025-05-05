@@ -95,7 +95,13 @@ const putAddress = async (props, id) => {
       'content-type': 'application/json',
       authorization: `Bearer: ${token}`,
     },
-    body: JSON.stringify({...props}),
+    body: JSON.stringify({
+      country: props.country,
+      city: props.city,
+      postalcode: props.postalcode,
+      street: props.street,
+      door_code: props.doorCode,
+    }),
   };
   const postResult = await fetchUsersData('/' + id + '/addresses/' + props.id, fetchOptions);
   return postResult;

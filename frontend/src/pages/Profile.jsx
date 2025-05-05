@@ -42,7 +42,15 @@ export default function Profile() {
   const [userAddresses, setUserAddresses] = useState([]);
   useEffect(() => {
     handleGetAddresses(user.id).then((addresses) => {
-      setUserAddresses(addresses || []);
+      if (addresses && Array.isArray(addresses)) {
+        const mappedAddresses = addresses.map((address) => ({
+          ...address,
+          doorCode: address.door_code, // Backend sends door_code
+        }));
+        setUserAddresses(mappedAddresses);
+      } else {
+        setUserAddresses([]);
+      }
     });
   }, [handleGetAddresses, user.id]);
   console.log('userAdresses: ', userAddresses);
@@ -273,7 +281,7 @@ export default function Profile() {
           {visibleOrders.map((order) => (
             <div key={order.id} className="order-card">
               <p>Order ID: {order.id}</p>
-              <p>Items:</p>
+              <p>Status: {order.status}</p>
               <p>Total Price: €{order.total}</p>
             </div>
           ))}
