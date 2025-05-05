@@ -29,6 +29,7 @@ function ShoppingCart() {
   }, []);
 
   const handleOrder = async () => {
+    if (Object.keys(cartItems).length === 0) return;
     const orderDetails = {
       address: 2,
       items: cartItems,

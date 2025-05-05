@@ -3,7 +3,6 @@ import {useOrder} from '../hooks/useOrder';
 import {useEffect, useState} from 'react';
 import {FaRegClock, FaTruck, FaCheck} from 'react-icons/fa6';
 import {BsBoxArrowUpRight} from 'react-icons/bs';
-
 import '../css/order.css';
 
 export default function Order() {
