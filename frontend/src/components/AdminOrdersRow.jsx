@@ -93,7 +93,7 @@ export default function AdminOrdersRow(props) {
             }}
             status={selectedStatus == 'delivering' ? 'green' : 'red'}
           >
-            {order.type == 'toimituksessa' ? 'Toimituksessa' : 'Nouto'}
+            {order.type == 'delivery' ? 'Toimituksessa' : 'Nouto'}
           </AdminOrdersButton>
         </div>
         <div className="admin-orders-button-group action-buttons">
