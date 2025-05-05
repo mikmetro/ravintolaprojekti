@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <header>
       <a className="header-logo-wrapper" href="/">
-        <img className="header-logo" src="https://placehold.co/96x48" />
+        <img className="header-logo" src="assets/logo.png" />
       </a>
       <a className="header-link" href="/menu">
         Ruokalista
