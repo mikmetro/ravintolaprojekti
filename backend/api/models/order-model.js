@@ -43,11 +43,7 @@ const createOrder = async (orderData) => {
 
     const orderId = orderResult.insertId;
 
-<<<<<<< HEAD
-    for (const item of Object.values(items)) {
-=======
     for (const item of items) {
->>>>>>> 68e40d82e943f398de808fbbba504cd630e6b985
       await connection.execute(
         `INSERT INTO order_item 
          (order_id, item_id, quantity, item_price)
