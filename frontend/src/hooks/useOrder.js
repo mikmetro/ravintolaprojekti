@@ -66,7 +66,7 @@ const useOrder = () => {
     return items;
   };
 
-  const getMyOrders = async (userId) => {
+  const getMyOrders = async () => {
     const token = localStorage.getItem('token');
     const fetchOptions = {
       method: 'GET',
@@ -75,7 +75,7 @@ const useOrder = () => {
         authorization: `Bearer: ${token}`,
       },
     };
-    const items = await fetchItemData('/my-orders' + userId, fetchOptions);
+    const items = await fetchItemData('/my-orders', fetchOptions);
     return items;
   };
 

@@ -1,7 +1,7 @@
 // UserContext.jsx
 import {useState} from 'react';
 import {loginUser, checkCurrentToken} from '../hooks/useAuth';
-import {registerUser} from '../hooks/useUser';
+import {registerUser, putUser, getUserAddress, putAddress, postAddress, deleteAddress} from '../hooks/useUser';
 import {useNavigate} from 'react-router-dom';
 import {UserContext} from './Contexts';
 
@@ -31,6 +31,48 @@ const UserProvider = ({children}) => {
     }
   };
 
+  const handleUpdateUser = async (id, credentials) => {
+    try {
+      await putUser(id, credentials);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
+  const handleGetAddresses = async (id) => {
+    try {
+      const result = await getUserAddress(id);
+      return result;
+    } catch (e) {
+      console.log(e.message);
+      return null;
+    }
+  }
+
+  const handleAddAddress = async (credentials, id) => {
+    try {
+      await postAddress(credentials, id);
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
+
+  const handleUpdateAddress = async (credentials, id) => {
+    try {
+      await putAddress(credentials, id);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
+  const handleDeleteAddress = async (id, addressId) => {
+    try {
+      await deleteAddress(id, addressId);
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
+
   const refreshUser = async () => {
     const tokenResult = await checkCurrentToken();
     if (tokenResult.statusCode === 200) setUser(tokenResult.user);
@@ -48,7 +90,7 @@ const UserProvider = ({children}) => {
 
   return (
     <UserContext.Provider
-      value={{user, handleLogin, handleLogout, handleRegister, refreshUser}}
+      value={{user, handleLogin, handleLogout, handleRegister, handleUpdateUser, refreshUser, handleGetAddresses, handleAddAddress, handleUpdateAddress, handleDeleteAddress}}
     >
       {children}
     </UserContext.Provider>

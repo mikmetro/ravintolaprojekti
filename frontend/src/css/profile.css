@@ -16,16 +16,18 @@
   font-weight: 500;
   gap: 0.5em;
   align-items: flex-start;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .profile-details-item {
-  font-size: 1.5rem;
-  margin-top: 0.3em;
+  font-size: 1.2rem;
+  margin-top: 0.2em;
+  font-weight: 400;
 }
+
 .profile-details-info {
-  font-size: 1rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  width: 100%;
 }
 
 .profile-details-image {
@@ -35,7 +37,6 @@
 .profile-orders-title {
   text-decoration: underline;
   font-size: 2rem;
-  margin-bottom: 0.5em;
 }
 
 .profile-control {
@@ -44,9 +45,14 @@
 
 .profile-edit {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
   gap: 1em;
+}
+
+.profile-details-info > input {
+  display: block;
+  width: 100%;
+  max-width: 20rem;
 }
 
 .order-list {
@@ -71,4 +77,27 @@
   justify-content: center;
   margin: 1rem auto;
   padding: 0.5rem 1rem;
+}
+
+.address-edit {
+  display: block;
+  gap: 1em;
+}
+
+.address-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+}
+
+.address-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 200px;
+  max-width: 250px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex: 1 1 200px;
 }

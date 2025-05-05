@@ -1,12 +1,27 @@
 import '../css/profile.css';
 import Button from '../components/ui/Button';
 import useUserContext from '../hooks/contextproviders/useUserContext';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Input from '../components/ui/Input.jsx';
+import {useOrder} from "../hooks/useOrder.js";
 
 export default function Profile() {
-  const {user, handleLogout} = useUserContext();
+  const {user, handleLogout, handleUpdateUser, handleGetAddresses, handleAddAddress, handleUpdateAddress, handleDeleteAddress} = useUserContext();
   console.log(user);
+  const {getMyOrders} = useOrder();
+  useEffect(() => {
+    getMyOrders(user.id).then((orders) => {
+      console.log('Orders: ', orders);
+    });
+  })
+
+  const [userAddresses, setUserAddresses] = useState([]);
+  useEffect(() => {
+    handleGetAddresses(user.id).then((addresses) => {
+      setUserAddresses(addresses || []);
+    });
+  }, [user.id]);
+  console.log('userAdresses: ', userAddresses);
 
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({
@@ -15,13 +30,56 @@ export default function Profile() {
     phone: user.phone,
   });
 
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [editAddressData, setEditAddressData] = useState({
+    country: '',
+    city: '',
+    postalcode: '',
+    street: '',
+    doorCode: '',
+  });
+  const handleEditClick = (index) => {
+    setEditingIndex(index);
+    setEditAddressData(userAddresses[index]);
+  };
+  const handleSaveAddress = () => {
+    const updatedAddresses = [...userAddresses];
+
+    if (editingIndex === userAddresses.length) {
+      updatedAddresses.push(editAddressData);
+      handleAddAddress(editAddressData, user.id);
+    } else {
+      updatedAddresses[editingIndex] = editAddressData;
+      handleUpdateAddress(updatedAddresses[editingIndex], user.id);
+    }
+
+    setUserAddresses(updatedAddresses);
+    setEditingIndex(null);
+  };
+  const handleAddNewAddress = () => {
+    setEditAddressData({
+      country: '',
+      city: '',
+      postalcode: '',
+      street: '',
+      doorCode: '',
+    });
+    setEditingIndex(userAddresses.length);
+  };
+  const handleAddressDelete = (index) => {
+    const updatedAddresses = userAddresses.filter((_, i) => i !== index);
+    setUserAddresses(updatedAddresses);
+
+    handleDeleteAddress(user.id, userAddresses[index].id);
+  };
+
   const handleChange = (e) => {
     setEditData({...editData, [e.target.name]: e.target.value});
   };
 
   const handleSave = () => {
-    // TODO Send the updated user data to backend
-    console.log('Saving data...\n', editData);
+    console.log('Saving User data...\n', editData);
+    handleUpdateUser(user.id, editData);
   };
 
   const isUnchanged =
@@ -154,6 +212,66 @@ export default function Profile() {
           </>
         )}
       </div>
+      <div className="profile-addresses">
+        <h2 className="profile-addresses-title">Addresses</h2>
+        <div className="address-list">
+          {userAddresses.map((address, index) => (
+            <div key={index} className="address-card">
+              <p>{address.street}</p>
+              <p>{address.city}</p>
+              <p>{address.country}</p>
+              <p>{address.postalcode}</p>
+              <p>{address.doorCode}</p>
+              <Button color="black" onClick={() => handleEditClick(index)}>
+                Edit
+              </Button>
+              <Button color="red" onClick={() => handleAddressDelete(index)}>
+                Delete
+              </Button>
+            </div>
+          ))}
+          {editingIndex === null && (
+            <Button color="green" onClick={handleAddNewAddress}>
+              Add Address
+            </Button>
+          )}
+          {editingIndex !== null && (
+            <div className="address-edit">
+              <p>Country</p>
+              <Input
+                name="country"
+                value={editAddressData.country}
+                onChange={(e) => setEditAddressData({...editAddressData, country: e.target.value})} />
+              <p>City</p>
+              <Input
+                name="city"
+                value={editAddressData.city}
+                onChange={(e) => setEditAddressData({...editAddressData, city: e.target.value})} />
+              <p>Postal Code</p>
+              <Input
+                name="postalcode"
+                value={editAddressData.postalcode}
+                onChange={(e) => setEditAddressData({...editAddressData, postalcode: e.target.value})} />
+              <p>Street</p>
+              <Input
+                name="street"
+                value={editAddressData.street}
+                onChange={(e) => setEditAddressData({...editAddressData, street: e.target.value})} />
+              <p>Door Code</p>
+              <Input
+                name="doorCode"
+                value={editAddressData.doorCode}
+                onChange={(e) => setEditAddressData({...editAddressData, doorCode: e.target.value})} />
+              <Button color="green" onClick={handleSaveAddress}>
+                Save
+              </Button>
+              <Button color="red" onClick={() => setEditingIndex(null)}>
+                Cancel
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
       <div className="profile-control">
         <Button color="red" className="profile-logout" onClick={handleLogout}>
           Logout
@@ -161,6 +279,7 @@ export default function Profile() {
       </div>
       <div className="profile-orders">
         <h2 className="profile-orders-title">Tilaukseni</h2>
+        <br/>
         <div className="order-list">
           {visibleOrders.map((order) => (
             <div key={order.id} className="order-card">
