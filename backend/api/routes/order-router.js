@@ -20,18 +20,9 @@ orderRouter
   .route("/")
   .post(
     authenticateToken,
-    body("country").trim().isLength({ min: 1, max: 100 }),
-    body("city").trim().isLength({ min: 1, max: 100 }),
-    body("postalcode").trim().isLength({ min: 1, max: 20 }),
-    body("street").trim().isLength({ min: 1, max: 255 }),
-    body("doorCode").optional().trim().isLength({ max: 50 }),
-    body("subTotal").isNumeric(),
-    body("total").isNumeric(),
+    body("address").isNumeric(),
     body("type").isIn(["delivery", "pickup"]),
-    body("items").isArray({ min: 1 }),
-    body("items.*.id").isNumeric(),
-    body("items.*.quantity").isInt({ min: 1 }),
-    body("items.*.price").isNumeric(),
+    body("items").isObject({ strict: false }),
     validationErrors,
     placeOrder
   );
