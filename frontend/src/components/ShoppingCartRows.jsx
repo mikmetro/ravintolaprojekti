@@ -31,7 +31,7 @@ export default function ShoppingCartRows(props) {
   return (
     <tr key={cartItem.id}>
       <td>{cartItem.name}</td>
-      <td>{cartItem.price}</td>
+      <td>{cartItem.price}€</td>
       <td>
         <div className="shopping-cart-actions">
           <Spinner

@@ -3,9 +3,26 @@ import '../css/shoppingPage.css';
 import '../css/Menu.css';
 import useCartContext from '../hooks/contextproviders/useCartContext';
 import Button from '../components/ui/Button';
+import {useNavigate} from 'react-router-dom';
+import {useOrder} from '../hooks/useOrder';
 
 function ShoppingCart() {
-  const {cartItems, cartPrice} = useCartContext();
+  const {cartItems, cartPrice, clearCart} = useCartContext();
+  const {placeOrder} = useOrder();
+  const navigate = useNavigate();
+
+  const handleOrder = async () => {
+    const orderDetails = {
+      address: 1,
+      items: cartItems,
+      type: 'delivery',
+    };
+    const orderResult = await placeOrder(orderDetails);
+    if (orderResult.statusCode === 201) {
+      //clearCart();
+      navigate('/order/' + orderResult.data.orderId);
+    }
+  };
 
   return (
     <div className="shopping-page-wrapper">
@@ -31,9 +48,19 @@ function ShoppingCart() {
           )}
         </tbody>
       </table>
+      <div className="shopping-page-address">
+        <p>Toimitus osoite: </p>
+        <select
+          className="shopping-page-address-dropdown"
+          defaultValue="Valitse osoite"
+        >
+          <option>1</option>
+          <option>dsadsa</option>
+        </select>
+      </div>
       <div className="shopping-page-total">
-        <h2>Total:{cartPrice.toFixed(2)} €</h2>
-        <Button color="green" onClick={() => console.log('clicked')}>
+        <h2>Total: {cartPrice.toFixed(2)}€</h2>
+        <Button color="green" onClick={handleOrder}>
           Maksa
         </Button>
       </div>
