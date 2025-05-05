@@ -2,10 +2,13 @@ import '../css/home.css';
 import {useEffect, useState} from 'react';
 import {useHSL} from '../hooks/useHSL';
 import Timeline from '../components/Timeline';
+import Button from '../components/ui/Button';
+import {useNavigate} from 'react-router-dom';
 export default function Home() {
   const {getRoute} = useHSL();
   const [route, setRoute] = useState();
   const [userLocation, setUserLocation] = useState(null);
+  const navigate = useNavigate();
 
   // Function to load the route based on coordinates
   const loadRoute = async (latitude, longitude) => {
@@ -51,15 +54,23 @@ export default function Home() {
 
   return (
     <section className="home-main">
-      <h1 className="home-title">Tervetuloa!</h1>
-      {route ? (
-        <>
-          <h2>Nopeasti meille julkisilla juuri sieltä missä olet!</h2>
-          <Timeline route={route.data.data.plan.itineraries[0]} />
-        </>
-      ) : (
-        'loading'
-      )}
+      <div className="home-welcome">
+        <h1 className="home-title">Tervetuloa!</h1>
+
+        <div className="home-actions">
+          <Button color="green" onClick={() => navigate('/menu')}>
+            Avaa ruokalista
+          </Button>
+        </div>
+      </div>
+      <div className="home-timeline">
+        {route ? (
+          <>
+            <h2>Nopeasti meille julkisilla juuri sieltä missä olet!</h2>
+            <Timeline route={route.data.data.plan.itineraries[0]} />
+          </>
+        ) : null}
+      </div>
     </section>
   );
 }
