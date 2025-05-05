@@ -18,4 +18,31 @@ async function registerUser(credentials) {
   return registerResult;
 }
 
-export {registerUser};
+const getUsers = async () => {
+  const token = localStorage.getItem('token');
+  const fetchOptions = {
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer: ${token}`,
+    },
+  };
+  const usersResult = await fetchUsersData('/', fetchOptions);
+  return usersResult;
+};
+
+const putUser = async (props, id) => {
+  const token = localStorage.getItem('token');
+  const fetchOptions = {
+    method: 'PUT',
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer: ${token}`,
+    },
+    body: JSON.stringify({...props}),
+  };
+  const postResult = await fetchUsersData('/' + id, fetchOptions);
+  return postResult;
+};
+
+export {registerUser, getUsers, putUser};
