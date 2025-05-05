@@ -1,19 +1,36 @@
-import ShoppingCartRows from '../components/shoppingCartRows';
+import ShoppingCartRows from '../components/ShoppingCartRows';
 import '../css/shoppingPage.css';
 import '../css/Menu.css';
 import useCartContext from '../hooks/contextproviders/useCartContext';
 import Button from '../components/ui/Button';
 import {useNavigate} from 'react-router-dom';
 import {useOrder} from '../hooks/useOrder';
+import {getUserAddress} from '../hooks/useUser';
+import {useEffect, useState} from 'react';
+import useUserContext from '../hooks/contextproviders/useUserContext';
 
 function ShoppingCart() {
+  const {user} = useUserContext();
   const {cartItems, cartPrice, clearCart} = useCartContext();
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState(-1);
   const {placeOrder} = useOrder();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    (async () => {
+      if (!user) return;
+      const addresses = await getUserAddress(user.id);
+      if (addresses.length > 0) {
+        setSelectedAddress(addresses[0].id);
+      }
+      setAddresses(addresses);
+    })();
+  }, []);
+
   const handleOrder = async () => {
     const orderDetails = {
-      address: 1,
+      address: 2,
       items: cartItems,
       type: 'delivery',
     };
@@ -52,10 +69,14 @@ function ShoppingCart() {
         <p>Toimitus osoite: </p>
         <select
           className="shopping-page-address-dropdown"
-          defaultValue="Valitse osoite"
+          value={selectedAddress}
+          onChange={(e) => setSelectedAddress(e.target.value)}
         >
-          <option>1</option>
-          <option>dsadsa</option>
+          {addresses.map((address) => (
+            <option key={address.id} value={address.id}>
+              {address.street}, {address.postalcode} {address.city}
+            </option>
+          ))}
         </select>
       </div>
       <div className="shopping-page-total">

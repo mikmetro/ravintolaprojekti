@@ -49,7 +49,6 @@ const CartProvider = ({children}) => {
       (acc, item) => acc + +item.info.price * item.quantity,
       0
     );
-    console.log(price);
     setCartPrice(price);
   };
 
