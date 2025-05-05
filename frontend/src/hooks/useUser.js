@@ -45,4 +45,17 @@ const putUser = async (props, id) => {
   return postResult;
 };
 
-export {registerUser, getUsers, putUser};
+const deleteUser = async (id) => {
+  const token = localStorage.getItem('token');
+  const fetchOptions = {
+    method: 'DELETE',
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer: ${token}`,
+    },
+  };
+  const postResult = await fetchUsersData('/' + id, fetchOptions);
+  return postResult;
+};
+
+export {registerUser, getUsers, putUser, deleteUser};
