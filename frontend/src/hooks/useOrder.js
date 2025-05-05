@@ -16,8 +16,10 @@ const useOrder = () => {
     const token = localStorage.getItem('token');
     const fetchOptions = {
       method: 'GET',
-      headers: {'content-type': 'application/json'},
-      authorization: `Bearer: ${token}`,
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer: ${token}`,
+      },
     };
     const items = await fetchItemData('/active', fetchOptions);
     return items;
@@ -55,8 +57,10 @@ const useOrder = () => {
     const token = localStorage.getItem('token');
     const fetchOptions = {
       method: 'GET',
-      headers: {'content-type': 'application/json'},
-      authorization: `Bearer: ${token}`,
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer: ${token}`,
+      },
     };
     const items = await fetchItemData('/' + orderId, fetchOptions);
     return items;
@@ -66,8 +70,10 @@ const useOrder = () => {
     const token = localStorage.getItem('token');
     const fetchOptions = {
       method: 'GET',
-      headers: {'content-type': 'application/json'},
-      authorization: `Bearer: ${token}`,
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer: ${token}`,
+      },
     };
     const items = await fetchItemData('/my-orders' + userId, fetchOptions);
     return items;

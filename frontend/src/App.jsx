@@ -17,6 +17,7 @@ import PrivateRoute from './customroutes/PrivateRoute';
 import UserProvider from './contexts/UserProvider';
 import CartProvider from './contexts/CartProvider';
 import ShoppingCart from './pages/ShoppingCart';
+import Order from './pages/Order';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
                 <Route path="editMenu" element={<EditMenu />} />
                 <Route path="orders" element={<AdminOrders />} />
                 <Route path="cart" element={<ShoppingCart />} />
+                <Route path="order/:id" element={<Order />} />
               </Route>
             </Route>
           </Routes>
