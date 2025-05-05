@@ -79,7 +79,7 @@ export default function Profile() {
 
   const handleSave = () => {
     console.log('Saving User data...\n', editData);
-    handleUpdateUser(user.id, editData);
+    handleUpdateUser(editData, user.id);
   };
 
   const isUnchanged =

@@ -31,9 +31,9 @@ const UserProvider = ({children}) => {
     }
   };
 
-  const handleUpdateUser = async (id, credentials) => {
+  const handleUpdateUser = async (credentials, id) => {
     try {
-      await putUser(id, credentials);
+      await putUser(credentials, id);
     } catch (e) {
       console.log(e.message);
     }
