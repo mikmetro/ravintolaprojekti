@@ -14,7 +14,6 @@ export default function Home() {
   const loadRoute = async (latitude, longitude) => {
     const routeData = await getRoute(latitude, longitude);
     setRoute(routeData);
-    console.log(routeData);
   };
 
   // Function to get the user's location

@@ -32,7 +32,6 @@ export default function Profile() {
   };
 
   const handleSave = () => {
-    console.log('Saving User data...\n', editData);
     handleUpdateUser(editData, user.id).then(() => {
       setIsEditing(false);
       refreshUser();
@@ -65,7 +64,6 @@ export default function Profile() {
       }
     });
   }, [handleGetAddresses, user.id]);
-  console.log('userAdresses: ', userAddresses);
 
   const [editingIndex, setEditingIndex] = useState(null);
   const [editAddressData, setEditAddressData] = useState({
@@ -89,7 +87,6 @@ export default function Profile() {
       if (editingIndex === userAddresses.length) {
         const response = await handleAddAddress(editAddressData, user.id);
         if (response && response.statusCode === 201) {
-          console.log('RESPONSE ID: ' + response.id);
           const newAddress = {
             id: response.id,
             ...editAddressData,
@@ -98,7 +95,6 @@ export default function Profile() {
           success = true;
         }
       } else {
-        console.log('EDITING ADDRESS:', editAddressData);
         const response = await handleUpdateAddress(editAddressData, user.id);
         if (
           response &&
@@ -147,7 +143,6 @@ export default function Profile() {
 
   useEffect(() => {
     getMyOrders(user.id).then((orders) => {
-      console.log('Orders: ', orders);
       if (orders && orders.data.length > 0) {
         setOrders(orders.data);
       } else {
