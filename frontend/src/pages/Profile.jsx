@@ -4,24 +4,11 @@ import useUserContext from '../hooks/contextproviders/useUserContext';
 import {useEffect, useState} from 'react';
 import Input from '../components/ui/Input.jsx';
 import {useOrder} from "../hooks/useOrder.js";
+import ProfileAddressItem from "../components/ProfileAddressItem.jsx";
 
 export default function Profile() {
   const {user, handleLogout, handleUpdateUser, handleGetAddresses, handleAddAddress, handleUpdateAddress, handleDeleteAddress} = useUserContext();
   console.log(user);
-  const {getMyOrders} = useOrder();
-  useEffect(() => {
-    getMyOrders(user.id).then((orders) => {
-      console.log('Orders: ', orders);
-    });
-  })
-
-  const [userAddresses, setUserAddresses] = useState([]);
-  useEffect(() => {
-    handleGetAddresses(user.id).then((addresses) => {
-      setUserAddresses(addresses || []);
-    });
-  }, [user.id]);
-  console.log('userAdresses: ', userAddresses);
 
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({
@@ -29,49 +16,6 @@ export default function Profile() {
     email: user.email,
     phone: user.phone,
   });
-
-  const [editingIndex, setEditingIndex] = useState(null);
-  const [editAddressData, setEditAddressData] = useState({
-    country: '',
-    city: '',
-    postalcode: '',
-    street: '',
-    doorCode: '',
-  });
-  const handleEditClick = (index) => {
-    setEditingIndex(index);
-    setEditAddressData(userAddresses[index]);
-  };
-  const handleSaveAddress = () => {
-    const updatedAddresses = [...userAddresses];
-
-    if (editingIndex === userAddresses.length) {
-      updatedAddresses.push(editAddressData);
-      handleAddAddress(editAddressData, user.id);
-    } else {
-      updatedAddresses[editingIndex] = editAddressData;
-      handleUpdateAddress(updatedAddresses[editingIndex], user.id);
-    }
-
-    setUserAddresses(updatedAddresses);
-    setEditingIndex(null);
-  };
-  const handleAddNewAddress = () => {
-    setEditAddressData({
-      country: '',
-      city: '',
-      postalcode: '',
-      street: '',
-      doorCode: '',
-    });
-    setEditingIndex(userAddresses.length);
-  };
-  const handleAddressDelete = (index) => {
-    const updatedAddresses = userAddresses.filter((_, i) => i !== index);
-    setUserAddresses(updatedAddresses);
-
-    handleDeleteAddress(user.id, userAddresses[index].id);
-  };
 
   const handleChange = (e) => {
     setEditData({...editData, [e.target.name]: e.target.value});
@@ -91,6 +35,94 @@ export default function Profile() {
     setEditData({name: user.name, email: user.email, phone: user.phone});
     setIsEditing(false);
   };
+
+
+  // Addresses
+  const [saving, setSaving] = useState(false);
+  const [userAddresses, setUserAddresses] = useState([]);
+  useEffect(() => {
+    handleGetAddresses(user.id).then((addresses) => {
+      setUserAddresses(addresses || []);
+    });
+  }, [handleGetAddresses, user.id]);
+  console.log('userAdresses: ', userAddresses);
+
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [editAddressData, setEditAddressData] = useState({
+    country: '',
+    city: '',
+    postalcode: '',
+    street: '',
+    doorCode: '',
+  });
+  const handleEditClick = (index) => {
+    setEditingIndex(index);
+    setEditAddressData(userAddresses[index]);
+  };
+
+  const handleSaveAddress = async () => {
+    const updatedAddresses = [...userAddresses];
+    let success = false;
+    setSaving(true);
+
+    try {
+      if (editingIndex === userAddresses.length) {
+        const response = await handleAddAddress(editAddressData, user.id)
+        if (response && response.statusCode === 201) {
+          console.log("RESPONSE ID: " + response.id)
+          const newAddress = {
+            id: response.id,
+            ...editAddressData,
+          }
+          updatedAddresses.push(newAddress);
+          success = true;
+        }
+      } else {
+        console.log('EDITING ADDRESS:', editAddressData);
+        const response = await handleUpdateAddress(editAddressData, user.id);
+        if (response && (response.statusCode === 200 || response.statusCode === 204)) {
+          updatedAddresses[editingIndex] = editAddressData;
+          success = true;
+        }
+      }
+    } catch (error) {
+      console.error('Error saving address:', error);
+    }
+
+    if (success) {
+      setUserAddresses(updatedAddresses);
+      setEditingIndex(null);
+    } else {
+      alert('Failed to save address. Please try again.');
+    }
+    setSaving(false);
+  };
+
+  const handleAddNewAddress = () => {
+    setEditAddressData({
+      country: '',
+      city: '',
+      postalcode: '',
+      street: '',
+      doorCode: '',
+    });
+    setEditingIndex(userAddresses.length);
+  };
+  const handleAddressDelete = (index) => {
+    const updatedAddresses = userAddresses.filter((_, i) => i !== index);
+    setUserAddresses(updatedAddresses);
+
+    handleDeleteAddress(user.id, userAddresses[index].id);
+  };
+
+  // Orders
+
+  const {getMyOrders} = useOrder();
+  useEffect(() => {
+    getMyOrders(user.id).then((orders) => {
+      console.log('Orders: ', orders);
+    });
+  })
 
   const ORDERS_PER_PAGE = 4;
   // Mock data for orders
@@ -216,59 +248,33 @@ export default function Profile() {
         <h2 className="profile-addresses-title">Addresses</h2>
         <div className="address-list">
           {userAddresses.map((address, index) => (
-            <div key={index} className="address-card">
-              <p>{address.street}</p>
-              <p>{address.city}</p>
-              <p>{address.country}</p>
-              <p>{address.postalcode}</p>
-              <p>{address.doorCode}</p>
-              <Button color="black" onClick={() => handleEditClick(index)}>
-                Edit
-              </Button>
-              <Button color="red" onClick={() => handleAddressDelete(index)}>
-                Delete
-              </Button>
-            </div>
+            <ProfileAddressItem
+              key={index}
+              address={editingIndex === index ? editAddressData : address}
+              isEditing={editingIndex === index}
+              onChange={(updated) => setEditAddressData(updated)}
+              onEdit={() => handleEditClick(index)}
+              onDelete={() => handleAddressDelete(index)}
+              onSave={handleSaveAddress}
+              onCancel={() => setEditingIndex(null)}
+              saving={saving}
+            />
           ))}
+          {editingIndex === userAddresses.length && (
+            <ProfileAddressItem
+              address={editAddressData}
+              isEditing
+              isNew
+              onChange={(updated) => setEditAddressData(updated)}
+              onSave={handleSaveAddress}
+              onCancel={() => setEditingIndex(null)}
+              saving={saving}
+            />
+          )}
           {editingIndex === null && (
             <Button color="green" onClick={handleAddNewAddress}>
               Add Address
             </Button>
-          )}
-          {editingIndex !== null && (
-            <div className="address-edit">
-              <p>Country</p>
-              <Input
-                name="country"
-                value={editAddressData.country}
-                onChange={(e) => setEditAddressData({...editAddressData, country: e.target.value})} />
-              <p>City</p>
-              <Input
-                name="city"
-                value={editAddressData.city}
-                onChange={(e) => setEditAddressData({...editAddressData, city: e.target.value})} />
-              <p>Postal Code</p>
-              <Input
-                name="postalcode"
-                value={editAddressData.postalcode}
-                onChange={(e) => setEditAddressData({...editAddressData, postalcode: e.target.value})} />
-              <p>Street</p>
-              <Input
-                name="street"
-                value={editAddressData.street}
-                onChange={(e) => setEditAddressData({...editAddressData, street: e.target.value})} />
-              <p>Door Code</p>
-              <Input
-                name="doorCode"
-                value={editAddressData.doorCode}
-                onChange={(e) => setEditAddressData({...editAddressData, doorCode: e.target.value})} />
-              <Button color="green" onClick={handleSaveAddress}>
-                Save
-              </Button>
-              <Button color="red" onClick={() => setEditingIndex(null)}>
-                Cancel
-              </Button>
-            </div>
           )}
         </div>
       </div>

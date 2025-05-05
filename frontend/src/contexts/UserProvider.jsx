@@ -51,7 +51,8 @@ const UserProvider = ({children}) => {
 
   const handleAddAddress = async (credentials, id) => {
     try {
-      await postAddress(credentials, id);
+      const result = await postAddress(credentials, id);
+      return result;
     } catch (e) {
       console.log(e.message);
     }
@@ -59,7 +60,8 @@ const UserProvider = ({children}) => {
 
   const handleUpdateAddress = async (credentials, id) => {
     try {
-      await putAddress(credentials, id);
+      const result = await putAddress(credentials, id);
+      return result;
     } catch (e) {
       console.log(e.message);
     }
@@ -67,7 +69,8 @@ const UserProvider = ({children}) => {
 
   const handleDeleteAddress = async (id, addressId) => {
     try {
-      await deleteAddress(id, addressId);
+      const result = await deleteAddress(id, addressId);
+      return result;
     } catch (e) {
       console.log(e.message);
     }

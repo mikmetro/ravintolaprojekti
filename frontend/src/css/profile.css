@@ -80,24 +80,48 @@
 }
 
 .address-edit {
-  display: block;
+  display: flex;
+  flex-direction: column;
   gap: 1em;
+  padding: 16px;
 }
 
 .address-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  padding: 16px;
+  gap: 24px;
+  padding: 24px;
 }
 
 .address-card {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  min-width: 200px;
-  max-width: 250px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  flex: 1 1 200px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  min-width: 220px;
+  max-width: 280px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  flex: 1 1 220px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.address-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+.address-field {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.address-field strong {
+  display: inline-block;
+  width: 100px;
+}
+
+.address-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
 }

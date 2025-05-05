@@ -88,6 +88,7 @@ const postAddress = async (props, id) => {
 
 const putAddress = async (props, id) => {
   const token = localStorage.getItem('token');
+  console.log('PUTADDRESS: ', props);
   const fetchOptions = {
     method: 'PUT',
     headers: {
