@@ -60,8 +60,7 @@ export default function EditMenu() {
       )}
       {categories.map((category) => {
         const items = menuData[category.name];
-        console.log('menuDate', menuData);
-        console.log('items', items);
+
         if (!items) return null;
 
         return (

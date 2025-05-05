@@ -45,4 +45,79 @@ const putUser = async (props, id) => {
   return postResult;
 };
 
-export {registerUser, getUsers, putUser};
+const deleteUser = async (id) => {
+  const token = localStorage.getItem('token');
+  const fetchOptions = {
+    method: 'DELETE',
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer: ${token}`,
+    },
+  };
+  const postResult = await fetchUsersData('/' + id, fetchOptions);
+  return postResult;
+};
+
+export {registerUser, getUsers, putUser, deleteUser};
+const getUserAddress = async (id) => {
+  const token = localStorage.getItem('token');
+  const fetchOptions = {
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer: ${token}`,
+    },
+  };
+  const addressResult = await fetchUsersData('/' + id + '/addresses', fetchOptions);
+  return addressResult;
+};
+
+const postAddress = async (props, id) => {
+  const token = localStorage.getItem('token');
+  const fetchOptions = {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer: ${token}`,
+    },
+    body: JSON.stringify({...props}),
+  };
+  const postResult = await fetchUsersData('/' + id + '/addresses', fetchOptions);
+  return postResult;
+};
+
+const putAddress = async (props, id) => {
+  const token = localStorage.getItem('token');
+  console.log('PUTADDRESS: ', props);
+  const fetchOptions = {
+    method: 'PUT',
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer: ${token}`,
+    },
+    body: JSON.stringify({
+      country: props.country,
+      city: props.city,
+      postalcode: props.postalcode,
+      street: props.street,
+      door_code: props.doorCode,
+    }),
+  };
+  const postResult = await fetchUsersData('/' + id + '/addresses/' + props.id, fetchOptions);
+  return postResult;
+};
+
+const deleteAddress = async (id, addressId) => {
+  const token = localStorage.getItem('token');
+  const fetchOptions = {
+    method: 'DELETE',
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer: ${token}`,
+    },
+  };
+  const postResult = await fetchUsersData('/' + id + '/addresses/' + addressId, fetchOptions);
+  return postResult;
+};
+
+export {getUserAddress, postAddress, putAddress, deleteAddress};

@@ -13,16 +13,16 @@ export default function Header() {
       <a className="header-logo-wrapper" href="/">
         <img className="header-logo" src="https://placehold.co/96x48" />
       </a>
-      <a className="header-link" href="menu">
+      <a className="header-link" href="/menu">
         Ruokalista
       </a>
-      <a className="header-link" href="profile">
+      <a className="header-link" href="/profile">
         Profiili
       </a>
-      <a className="header-link" href="admin">
+      <a className="header-link" href="/admin">
         Hallintasivu
       </a>
-      <a className="header-link" href="cart">
+      <a className="header-link" href="/cart">
         Ostoskori
       </a>
       <button className="header-cart" onClick={toggleCart}>

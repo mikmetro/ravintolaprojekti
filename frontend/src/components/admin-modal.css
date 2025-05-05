@@ -98,3 +98,21 @@
   gap: 1em;
   margin-top: 2em;
 }
+
+.manage-users-row-tr td {
+  text-align: center; /* Center text horizontally */
+  vertical-align: middle; /* Center content vertically */
+  font-size: 1.2rem;
+}
+
+.manage-users-row-role-td {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem; /* spacing between role text and buttons */
+}
+
+.manage-users-row-role-td h3 {
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
