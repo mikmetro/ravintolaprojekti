@@ -27,9 +27,7 @@ const login = async (req, res, next) => {
       name: user.name,
       phone: user.phone,
     };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "24h",
-    });
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
 
     res.json({
       user: payload,
@@ -45,6 +43,7 @@ const getMe = async (req, res) => {
     message: "Token valid",
     user: req.user,
   });
+  console.log(req.user);
 };
 
 export { login, getMe };
