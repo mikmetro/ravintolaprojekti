@@ -1,57 +1,57 @@
-import Button from "./ui/Button.jsx";
-import Input from "./ui/Input.jsx";
+import Button from './ui/Button.jsx';
+import Input from './ui/Input.jsx';
 
 const AddressCard = ({
-                       address,
-                       isEditing,
-                       isNew,
-                       onChange,
-                       onEdit,
-                       onDelete,
-                       onSave,
-                       onCancel,
-                       saving,
-                     }) => {
+  address,
+  isEditing,
+  isNew,
+  onChange,
+  onEdit,
+  onDelete,
+  onSave,
+  onCancel,
+  saving,
+}) => {
   if (isEditing || isNew) {
     return (
       <div className="address-card">
-        <p>Country</p>
+        <p>Maa</p>
         <Input
           name="country"
           value={address.country}
-          onChange={(e) => onChange({ ...address, country: e.target.value })}
+          onChange={(e) => onChange({...address, country: e.target.value})}
         />
-        <p>City</p>
+        <p>Kaupunki</p>
         <Input
           name="city"
           value={address.city}
-          onChange={(e) => onChange({ ...address, city: e.target.value })}
+          onChange={(e) => onChange({...address, city: e.target.value})}
         />
-        <p>Postal Code</p>
+        <p>Postinumero</p>
         <Input
           name="postalcode"
           value={address.postalcode}
-          onChange={(e) => onChange({ ...address, postalcode: e.target.value })}
+          onChange={(e) => onChange({...address, postalcode: e.target.value})}
         />
-        <p>Street</p>
+        <p>Katuosoite</p>
         <Input
           name="street"
           value={address.street}
-          onChange={(e) => onChange({ ...address, street: e.target.value })}
+          onChange={(e) => onChange({...address, street: e.target.value})}
         />
-        <p>Door Code</p>
+        <p>Ovikoodi</p>
         <Input
           name="doorCode"
           value={address.doorCode}
-          onChange={(e) => onChange({ ...address, doorCode: e.target.value })}
+          onChange={(e) => onChange({...address, doorCode: e.target.value})}
         />
         <div className="address-buttons">
-            <Button color="red" onClick={onCancel}>
-                Cancel
-            </Button>
-            <Button color="green" disabled={saving} onClick={onSave}>
-                {saving ? 'Saving...' : 'Save'}
-            </Button>
+          <Button color="red" onClick={onCancel}>
+            Peruuta
+          </Button>
+          <Button color="green" disabled={saving} onClick={onSave}>
+            {saving ? 'Tallennetaan...' : 'Tallenna'}
+          </Button>
         </div>
       </div>
     );
@@ -79,10 +79,10 @@ const AddressCard = ({
       </div>
       <div className="address-buttons">
         <Button color="black" onClick={onEdit}>
-          Edit
+          Muokkaa
         </Button>
         <Button color="red" onClick={onDelete}>
-          Delete
+          Poista
         </Button>
       </div>
     </div>

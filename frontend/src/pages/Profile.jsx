@@ -169,7 +169,7 @@ export default function Profile() {
         {isEditing ? (
           <>
             <div className="profile-details-info">
-              <p>Name</p>
+              <p>Nimi</p>
               <Input
                 name="name"
                 value={editData.name}
@@ -179,7 +179,7 @@ export default function Profile() {
               />
             </div>
             <div className="profile-details-info">
-              <p>Email</p>
+              <p>Sähköposti</p>
               <Input
                 name="email"
                 value={editData.email}
@@ -188,7 +188,7 @@ export default function Profile() {
               />
             </div>
             <div className="profile-details-info">
-              <p>Phone Number</p>
+              <p>Puhelinnumero</p>
               <Input
                 name="phone"
                 value={editData.phone}
@@ -200,15 +200,15 @@ export default function Profile() {
         ) : (
           <>
             <div>
-              <p className="profile-details-info">Name</p>
+              <p className="profile-details-info">Nimi</p>
               <p className="profile-details-item">{user.name}</p>
             </div>
             <div>
-              <p className="profile-details-info">Email</p>
+              <p className="profile-details-info">Sähköposti</p>
               <p className="profile-details-item">{user.email}</p>
             </div>
             <div>
-              <p className="profile-details-info">Phone Number</p>
+              <p className="profile-details-info">Puhelinnumero</p>
               <p className="profile-details-item">{user.phone}</p>
             </div>
           </>
@@ -222,7 +222,7 @@ export default function Profile() {
               onClick={handleCancel}
               className="profile-cancel-button"
             >
-              Cancel
+              Peruuta
             </Button>
             <Button
               color="green"
@@ -230,7 +230,7 @@ export default function Profile() {
               onClick={handleSave}
               className="profile-save-button"
             >
-              Save
+              Tallenna
             </Button>
           </>
         ) : (
@@ -240,13 +240,13 @@ export default function Profile() {
               onClick={() => setIsEditing(true)}
               className="profile-edit-button"
             >
-              Edit Profile
+              Muokkaa profiilia
             </Button>
           </>
         )}
       </div>
       <div className="profile-addresses">
-        <h2 className="profile-addresses-title">Addresses</h2>
+        <h2 className="profile-addresses-title">Osoitteet</h2>
         <div className="address-list">
           {userAddresses.map((address, index) => (
             <ProfileAddressItem
@@ -274,14 +274,14 @@ export default function Profile() {
           )}
           {editingIndex === null && (
             <Button color="green" onClick={handleAddNewAddress}>
-              Add Address
+              Lisää osoite
             </Button>
           )}
         </div>
       </div>
       <div className="profile-control">
         <Button color="red" className="profile-logout" onClick={handleLogout}>
-          Logout
+          Kirjaudu ulos
         </Button>
       </div>
       <div className="profile-orders">
@@ -290,9 +290,9 @@ export default function Profile() {
         <div className="order-list">
           {visibleOrders.map((order) => (
             <div key={order.id} className="order-card">
-              <p>Order ID: {order.id}</p>
-              <p>Status: {order.status}</p>
-              <p>Total Price: €{order.total}</p>
+              <p>Tilauksen numero: {order.id}</p>
+              <p>Tila: {order.status}</p>
+              <p>Kokonaishinta: €{order.total}</p>
               <Button
                 color="green"
                 onClick={() => navigate(`/order/${order.id}`)}
@@ -305,7 +305,7 @@ export default function Profile() {
         {visibleOrders.length < orders.length && (
           <div className="load-more-button">
             <Button onClick={handleLoadMore} color="yellow">
-              Load More Orders
+              Lataa lisää tilauksia
             </Button>
           </div>
         )}
