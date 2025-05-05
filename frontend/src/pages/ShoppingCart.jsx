@@ -29,6 +29,7 @@ function ShoppingCart() {
   }, []);
 
   const handleOrder = async () => {
+    if (Object.keys(cartItems).length === 0) return;
     const orderDetails = {
       address: 2,
       items: cartItems,
@@ -36,7 +37,7 @@ function ShoppingCart() {
     };
     const orderResult = await placeOrder(orderDetails);
     if (orderResult.statusCode === 201) {
-      //clearCart();
+      clearCart();
       navigate('/order/' + orderResult.data.orderId);
     }
   };

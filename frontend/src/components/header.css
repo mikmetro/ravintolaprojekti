@@ -10,6 +10,8 @@ header {
   cursor: pointer;
   padding-right: 1em;
   border-right: 1px solid gray;
+  height: 48px;
+  width: 128px;
 }
 
 .header-logo-wrapper {

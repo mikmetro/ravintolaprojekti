@@ -1,7 +1,14 @@
 // UserContext.jsx
 import {useState} from 'react';
 import {loginUser, checkCurrentToken} from '../hooks/useAuth';
-import {registerUser, putUser, getUserAddress, putAddress, postAddress, deleteAddress} from '../hooks/useUser';
+import {
+  registerUser,
+  putUser,
+  getUserAddress,
+  putAddress,
+  postAddress,
+  deleteAddress,
+} from '../hooks/useUser';
 import {useNavigate} from 'react-router-dom';
 import {UserContext} from './Contexts';
 
@@ -47,7 +54,7 @@ const UserProvider = ({children}) => {
       console.log(e.message);
       return null;
     }
-  }
+  };
 
   const handleAddAddress = async (credentials, id) => {
     try {
@@ -56,7 +63,7 @@ const UserProvider = ({children}) => {
     } catch (e) {
       console.log(e.message);
     }
-  }
+  };
 
   const handleUpdateAddress = async (credentials, id) => {
     try {
@@ -74,7 +81,7 @@ const UserProvider = ({children}) => {
     } catch (e) {
       console.log(e.message);
     }
-  }
+  };
 
   const refreshUser = async () => {
     const tokenResult = await checkCurrentToken();
@@ -93,7 +100,18 @@ const UserProvider = ({children}) => {
 
   return (
     <UserContext.Provider
-      value={{user, handleLogin, handleLogout, handleRegister, handleUpdateUser, refreshUser, handleGetAddresses, handleAddAddress, handleUpdateAddress, handleDeleteAddress}}
+      value={{
+        user,
+        handleLogin,
+        handleLogout,
+        handleRegister,
+        handleUpdateUser,
+        refreshUser,
+        handleGetAddresses,
+        handleAddAddress,
+        handleUpdateAddress,
+        handleDeleteAddress,
+      }}
     >
       {children}
     </UserContext.Provider>

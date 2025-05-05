@@ -20,7 +20,6 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const registerResult = await handleRegister(formFields);
-    console.log(registerResult, user);
     if (registerResult.statusCode === 200) {
       navigate('/profile');
     }

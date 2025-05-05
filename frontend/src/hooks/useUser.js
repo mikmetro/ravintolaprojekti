@@ -68,7 +68,10 @@ const getUserAddress = async (id) => {
       authorization: `Bearer: ${token}`,
     },
   };
-  const addressResult = await fetchUsersData('/' + id + '/addresses', fetchOptions);
+  const addressResult = await fetchUsersData(
+    '/' + id + '/addresses',
+    fetchOptions
+  );
   return addressResult;
 };
 
@@ -82,13 +85,15 @@ const postAddress = async (props, id) => {
     },
     body: JSON.stringify({...props}),
   };
-  const postResult = await fetchUsersData('/' + id + '/addresses', fetchOptions);
+  const postResult = await fetchUsersData(
+    '/' + id + '/addresses',
+    fetchOptions
+  );
   return postResult;
 };
 
 const putAddress = async (props, id) => {
   const token = localStorage.getItem('token');
-  console.log('PUTADDRESS: ', props);
   const fetchOptions = {
     method: 'PUT',
     headers: {
@@ -103,7 +108,10 @@ const putAddress = async (props, id) => {
       door_code: props.doorCode,
     }),
   };
-  const postResult = await fetchUsersData('/' + id + '/addresses/' + props.id, fetchOptions);
+  const postResult = await fetchUsersData(
+    '/' + id + '/addresses/' + props.id,
+    fetchOptions
+  );
   return postResult;
 };
 
@@ -116,7 +124,10 @@ const deleteAddress = async (id, addressId) => {
       authorization: `Bearer: ${token}`,
     },
   };
-  const postResult = await fetchUsersData('/' + id + '/addresses/' + addressId, fetchOptions);
+  const postResult = await fetchUsersData(
+    '/' + id + '/addresses/' + addressId,
+    fetchOptions
+  );
   return postResult;
 };
 

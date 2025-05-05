@@ -3,7 +3,6 @@ import {useOrder} from '../hooks/useOrder';
 import {useEffect, useState} from 'react';
 import {FaRegClock, FaTruck, FaCheck} from 'react-icons/fa6';
 import {BsBoxArrowUpRight} from 'react-icons/bs';
-
 import '../css/order.css';
 
 export default function Order() {
@@ -12,11 +11,17 @@ export default function Order() {
   const [orderInfo, setOrderInfo] = useState(null);
 
   useEffect(() => {
-    (async () => {
+    const refreshOrderInfo = async () => {
       const orderInfo = await getOrder(searchParams.id);
       setOrderInfo(orderInfo.data);
-      console.log(orderInfo);
-    })();
+    };
+
+    refreshOrderInfo();
+    const orderInfoInterval = setInterval(refreshOrderInfo, 5000);
+
+    return () => {
+      clearInterval(orderInfoInterval);
+    };
   }, []);
 
   if (orderInfo)

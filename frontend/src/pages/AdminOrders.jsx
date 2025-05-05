@@ -14,7 +14,6 @@ export default function AdminOrders() {
       (a, b) => new Date(a.created_at) - new Date(b.created_at)
     );
     setOrdersData(sortedOrders);
-    console.log(sortedOrders);
   };
   useEffect(() => {
     loadOrdersData();

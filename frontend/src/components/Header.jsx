@@ -2,29 +2,34 @@ import './header.css';
 import {IoCartOutline} from 'react-icons/io5';
 import {useState} from 'react';
 import CartSideMenu from './CartSideMenu';
+import useUserContext from '../hooks/contextproviders/useUserContext';
+import {Link} from 'react-router-dom';
 
 export default function Header() {
   const [sideMenuOpen, setSideMenuOpen] = useState();
+  const {user} = useUserContext();
 
   const toggleCart = () => setSideMenuOpen(!sideMenuOpen);
 
   return (
     <header>
-      <a className="header-logo-wrapper" href="/">
-        <img className="header-logo" src="https://placehold.co/96x48" />
-      </a>
-      <a className="header-link" href="/menu">
+      <Link className="header-logo-wrapper" to="/">
+        <img className="header-logo" src="assets/logo.png" />
+      </Link>
+      <Link className="header-link" to="/menu">
         Ruokalista
-      </a>
-      <a className="header-link" href="/profile">
+      </Link>
+      <Link className="header-link" to="/profile">
         Profiili
-      </a>
-      <a className="header-link" href="/admin">
-        Hallintasivu
-      </a>
-      <a className="header-link" href="/cart">
+      </Link>
+      {user?.role === 'admin' && (
+        <Link className="header-link" to="/admin">
+          Hallintasivu
+        </Link>
+      )}
+      <Link className="header-link" to="/cart">
         Ostoskori
-      </a>
+      </Link>
       <button className="header-cart" onClick={toggleCart}>
         <IoCartOutline />
       </button>

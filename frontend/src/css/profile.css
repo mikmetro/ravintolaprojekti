@@ -67,7 +67,17 @@
   border-radius: 8px;
   background-color: #f9f9f9;
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: repeat(3, auto);
 }
+
+.order-card button {
+  height: fit-content;
+  grid-column: 2;
+  grid-row: 1 / 4;
+}
+
 .order-card:hover {
   box-shadow: 0 0 0 3px rgba(100, 149, 237, 0.3);
   border-color: cornflowerblue;
@@ -90,7 +100,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
-  padding: 24px;
+  padding: 24px 0;
 }
 
 .address-card {
@@ -106,7 +116,6 @@
 }
 
 .address-card:hover {
-  transform: translateY(-4px);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
 }
 

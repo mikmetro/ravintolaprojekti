@@ -12,6 +12,9 @@ const placeOrder = async (req, res, next) => {
   try {
     const { address, type, items } = req.body;
 
+    if (!items || Object.keys(items).length === 0)
+      return res.status(400).json({ message: "Items cannot be empty!" });
+
     // Myöhemmin ehkä jotakin funktionaalista näille
     const discount = 0;
     const fee = 0;
