@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
 import "dotenv/config";
+import {findUserById} from "./api/models/user-model.js";
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
@@ -12,15 +13,18 @@ const authenticateToken = (req, res, next) => {
     return next(error);
   }
 
-  try {
-    const user = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = user;
-    next();
-  } catch (error) {
-    error.status = 403;
-    error.message = "Invalid token";
-    next(error);
-  }
+  jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+    if (err) return res.sendStatus(403);
+
+    try {
+      const user = await findUserById(decoded.id);
+      if (!user) return res.sendStatus(404);
+      req.user = user;
+      next();
+    } catch (e) {
+      res.status(500).json({ message: 'Failed to fetch user' });
+    }
+  });
 };
 
 const isAdmin = (req, res, next) => {

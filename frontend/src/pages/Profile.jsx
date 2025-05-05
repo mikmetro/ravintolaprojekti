@@ -7,7 +7,7 @@ import {useOrder} from "../hooks/useOrder.js";
 import ProfileAddressItem from "../components/ProfileAddressItem.jsx";
 
 export default function Profile() {
-  const {user, handleLogout, handleUpdateUser, handleGetAddresses, handleAddAddress, handleUpdateAddress, handleDeleteAddress} = useUserContext();
+  const {user, handleLogout, handleUpdateUser, handleGetAddresses, handleAddAddress, handleUpdateAddress, refreshUser, handleDeleteAddress} = useUserContext();
   console.log(user);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -23,7 +23,10 @@ export default function Profile() {
 
   const handleSave = () => {
     console.log('Saving User data...\n', editData);
-    handleUpdateUser(editData, user.id);
+    handleUpdateUser(editData, user.id).then(() => {
+      setIsEditing(false);
+      refreshUser();
+    });
   };
 
   const isUnchanged =
@@ -35,7 +38,6 @@ export default function Profile() {
     setEditData({name: user.name, email: user.email, phone: user.phone});
     setIsEditing(false);
   };
-
 
   // Addresses
   const [saving, setSaving] = useState(false);
