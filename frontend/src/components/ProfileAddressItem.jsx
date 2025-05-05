@@ -46,12 +46,12 @@ const AddressCard = ({
           onChange={(e) => onChange({ ...address, doorCode: e.target.value })}
         />
         <div className="address-buttons">
-          <Button disabled={saving} onClick={onSave}>
-            {saving ? 'Saving...' : 'Save'}
-          </Button>
-          <Button color="red" onClick={onCancel}>
-            Cancel
-          </Button>
+            <Button color="red" onClick={onCancel}>
+                Cancel
+            </Button>
+            <Button color="green" disabled={saving} onClick={onSave}>
+                {saving ? 'Saving...' : 'Save'}
+            </Button>
         </div>
       </div>
     );
