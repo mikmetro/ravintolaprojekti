@@ -36,7 +36,7 @@ function ShoppingCart() {
     };
     const orderResult = await placeOrder(orderDetails);
     if (orderResult.statusCode === 201) {
-      //clearCart();
+      clearCart();
       navigate('/order/' + orderResult.data.orderId);
     }
   };

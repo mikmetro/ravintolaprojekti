@@ -3,12 +3,22 @@ import Button from '../components/ui/Button';
 import useUserContext from '../hooks/contextproviders/useUserContext';
 import {useEffect, useState} from 'react';
 import Input from '../components/ui/Input.jsx';
-import {useOrder} from "../hooks/useOrder.js";
-import ProfileAddressItem from "../components/ProfileAddressItem.jsx";
+import {useOrder} from '../hooks/useOrder.js';
+import ProfileAddressItem from '../components/ProfileAddressItem.jsx';
+import {useNavigate} from 'react-router-dom';
 
 export default function Profile() {
-  const {user, handleLogout, handleUpdateUser, handleGetAddresses, handleAddAddress, handleUpdateAddress, refreshUser, handleDeleteAddress} = useUserContext();
-  console.log(user);
+  const {
+    user,
+    handleLogout,
+    handleUpdateUser,
+    handleGetAddresses,
+    handleAddAddress,
+    handleUpdateAddress,
+    refreshUser,
+    handleDeleteAddress,
+  } = useUserContext();
+  const navigate = useNavigate();
 
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({
@@ -77,20 +87,23 @@ export default function Profile() {
 
     try {
       if (editingIndex === userAddresses.length) {
-        const response = await handleAddAddress(editAddressData, user.id)
+        const response = await handleAddAddress(editAddressData, user.id);
         if (response && response.statusCode === 201) {
-          console.log("RESPONSE ID: " + response.id)
+          console.log('RESPONSE ID: ' + response.id);
           const newAddress = {
             id: response.id,
             ...editAddressData,
-          }
+          };
           updatedAddresses.push(newAddress);
           success = true;
         }
       } else {
         console.log('EDITING ADDRESS:', editAddressData);
         const response = await handleUpdateAddress(editAddressData, user.id);
-        if (response && (response.statusCode === 200 || response.statusCode === 204)) {
+        if (
+          response &&
+          (response.statusCode === 200 || response.statusCode === 204)
+        ) {
           updatedAddresses[editingIndex] = editAddressData;
           success = true;
         }
@@ -127,7 +140,7 @@ export default function Profile() {
 
   // Orders
   const ORDERS_PER_PAGE = 4;
-  const { getMyOrders } = useOrder();
+  const {getMyOrders} = useOrder();
   const [orders, setOrders] = useState([]);
   const [visibleOrders, setVisibleOrders] = useState([]);
   const [orderOffset, setOrderOffset] = useState(ORDERS_PER_PAGE);
@@ -278,13 +291,19 @@ export default function Profile() {
       </div>
       <div className="profile-orders">
         <h2 className="profile-orders-title">Tilaukseni</h2>
-        <br/>
+        <br />
         <div className="order-list">
           {visibleOrders.map((order) => (
             <div key={order.id} className="order-card">
               <p>Order ID: {order.id}</p>
               <p>Status: {order.status}</p>
               <p>Total Price: €{order.total}</p>
+              <Button
+                color="green"
+                onClick={() => navigate(`/order/${order.id}`)}
+              >
+                Mene tilaukseen
+              </Button>
             </div>
           ))}
         </div>
