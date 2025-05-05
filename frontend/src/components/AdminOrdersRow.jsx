@@ -16,7 +16,7 @@ export default function AdminOrdersRow(props) {
       status: newStatus,
     };
     console.log(id);
-    const putResult = await updateOrder(inputs, id);
+    await updateOrder(inputs, id);
     props.refreshOrders();
   };
   const timeSinceOrder = () => {
@@ -93,14 +93,19 @@ export default function AdminOrdersRow(props) {
             }}
             status={selectedStatus == 'delivering' ? 'green' : 'red'}
           >
-            Toimituksessa
+            {order.type == 'toimituksessa' ? 'Toimituksessa' : 'Nouto'}
           </AdminOrdersButton>
         </div>
         <div className="admin-orders-button-group action-buttons">
           <AdminOrdersButton
             onClick={() => {
-              setSelectedStatus('completed');
-              changeOrderStatus(order.id, 'completed');
+              const confirm = window.confirm(
+                'Oletko varma, että haluat merkitä tilauksen valmiiksi?'
+              );
+              if (confirm) {
+                setSelectedStatus('completed');
+                changeOrderStatus(order.id, 'completed');
+              }
             }}
             status="complete"
           >
@@ -108,8 +113,13 @@ export default function AdminOrdersRow(props) {
           </AdminOrdersButton>
           <AdminOrdersButton
             onClick={() => {
-              setSelectedStatus('cancelled');
-              changeOrderStatus(order.id, 'cancelled');
+              const confirm = window.confirm(
+                'Haluatko varmasti peruuttaa tämän tilauksen?'
+              );
+              if (confirm) {
+                setSelectedStatus('cancelled');
+                changeOrderStatus(order.id, 'cancelled');
+              }
             }}
             status="cancel"
           >

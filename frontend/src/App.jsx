@@ -18,6 +18,7 @@ import UserProvider from './contexts/UserProvider';
 import CartProvider from './contexts/CartProvider';
 import ShoppingCart from './pages/ShoppingCart';
 import Order from './pages/Order';
+import ManageUsers from './pages/ManageUsers';
 
 function App() {
   return (
@@ -33,7 +34,8 @@ function App() {
                 <Route path="register" element={<Register />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="admin" element={<Admin />} />
-                <Route path="editMenu" element={<EditMenu />} />
+                <Route path="edit-menu" element={<EditMenu />} />
+                <Route path="manage-users" element={<ManageUsers />} />
                 <Route path="orders" element={<AdminOrders />} />
                 <Route path="cart" element={<ShoppingCart />} />
                 <Route path="order/:id" element={<Order />} />
