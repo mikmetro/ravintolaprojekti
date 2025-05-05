@@ -9,15 +9,9 @@ export default function Home() {
 
   // Function to load the route based on coordinates
   const loadRoute = async (latitude, longitude) => {
-    const menuData = await getRoute(latitude, longitude);
-    setRoute(menuData);
-    console.log(menuData);
-
-    const dura =
-      menuData.data.data.plan.itineraries[0].endTime -
-      menuData.data.data.plan.itineraries[0].startTime;
-    let durat = dura / 1000 / 60;
-    console.log(durat);
+    const routeData = await getRoute(latitude, longitude);
+    setRoute(routeData);
+    console.log(routeData);
   };
 
   // Function to get the user's location
