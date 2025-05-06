@@ -64,7 +64,7 @@ const postUser = async (req, res, next) => {
       email,
       password: hashedPassword,
       phone,
-      role: "admin",
+      role: "customer",
     });
 
     if (!result.success) {
