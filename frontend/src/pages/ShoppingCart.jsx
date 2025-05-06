@@ -91,19 +91,26 @@ function ShoppingCart() {
         </select>
         {deliveryType === 'toimitus' && (
           <>
-            <p className="shopping-page-address-text">Valitse toimitusosoite</p>
-
-            <select
-              className="shopping-page-address-dropdown"
-              value={selectedAddress}
-              onChange={(e) => setSelectedAddress(e.target.value)}
-            >
-              {addresses.map((address) => (
-                <option key={address.id} value={address.id}>
-                  {address.street}, {address.postalcode} {address.city}
-                </option>
-              ))}
-            </select>
+            {addresses.length !== 0 ? (
+              <>
+                <p className="shopping-page-address-text">
+                  Valitse toimitusosoite
+                </p>
+                <select
+                  className="shopping-page-address-dropdown"
+                  value={selectedAddress}
+                  onChange={(e) => setSelectedAddress(e.target.value)}
+                >
+                  {addresses.map((address) => (
+                    <option key={address.id} value={address.id}>
+                      {address.street}, {address.postalcode} {address.city}
+                    </option>
+                  ))}
+                </select>
+              </>
+            ) : (
+              <p>ei osoitteita</p>
+            )}
           </>
         )}
       </div>
