@@ -1,6 +1,5 @@
 import ShoppingCartRows from '../components/ShoppingCartRows';
 import '../css/shoppingPage.css';
-import '../css/Menu.css';
 import useCartContext from '../hooks/contextproviders/useCartContext';
 import Button from '../components/ui/Button';
 import {useNavigate} from 'react-router-dom';
