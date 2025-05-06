@@ -15,7 +15,7 @@ const useHSL = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'digitransit-subscription-key': 'a8dec6a6255c461689b1770d7676e932',
+        'digitransit-subscription-key': import.meta.env.VITE_HSL_API_KEY,
       },
       body: JSON.stringify({
         query: `
