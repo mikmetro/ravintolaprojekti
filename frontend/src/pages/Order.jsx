@@ -23,7 +23,7 @@ export default function Order() {
       clearInterval(orderInfoInterval);
     };
   }, []);
-
+  console.log('orderInfo', orderInfo);
   if (orderInfo)
     return (
       <section className="order-wrapper">
@@ -55,13 +55,19 @@ export default function Order() {
         <div className="order-information">
           <h2>Tilauksen tiedot</h2>
           <div className="order-information-items">
-            <p className="order-information-item">
-              Osoite: {orderInfo.street}, {orderInfo.postalcode}{' '}
-              {orderInfo.city}
-            </p>
-            <p className="order-information-item">
-              Ovikoodi: {orderInfo.door_code}
-            </p>
+            {orderInfo.type === 'delivery' ? (
+              <>
+                <p className="order-information-item">
+                  Osoite: {orderInfo.street}, {orderInfo.postalcode}{' '}
+                  {orderInfo.city}
+                </p>
+                <p className="order-information-item">
+                  Ovikoodi: {orderInfo.door_code}
+                </p>
+              </>
+            ) : (
+              <p></p>
+            )}
             <p className="order-information-item">
               Aika: {new Date(orderInfo.created_at).toLocaleString()}
             </p>
