@@ -291,7 +291,22 @@ export default function Profile() {
           {visibleOrders.map((order) => (
             <div key={order.id} className="order-card">
               <p>Tilauksen numero: {order.id}</p>
-              <p>Tila: {order.status}</p>
+              <p>
+                Tila:{' '}
+                {order.status == 'pending'
+                  ? 'Odottaa'
+                  : order.status == 'paid'
+                  ? 'Maksettu'
+                  : order.status == 'preparing'
+                  ? 'Valmistetaan'
+                  : order.status == 'delivering'
+                  ? order.type == 'delivery'
+                    ? 'Toimituksessa'
+                    : 'Valmis noudettavaksi'
+                  : order.status == 'completed'
+                  ? 'Toimitettu'
+                  : 'Tilaus peruttu'}
+              </p>
               <p>Kokonaishinta: €{order.total}</p>
               <Button
                 color="green"
