@@ -58,3 +58,7 @@
   font-size: 1.2rem;
   cursor: pointer;
 }
+.shopping-page-buttons {
+  display: flex;
+  gap: 1rem; /* Adds space between the buttons */
+}

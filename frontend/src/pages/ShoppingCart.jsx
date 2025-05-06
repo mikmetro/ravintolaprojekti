@@ -110,18 +110,17 @@ function ShoppingCart() {
       </div>
       <div className="shopping-page-total">
         <h2>Total: {cartPrice.toFixed(2)}€</h2>
-        <Button
-          color={Object.keys(cartItems).length === 0 ? 'red' : 'green'}
-          onClick={handleOrder}
-        >
-          Maksa
-        </Button>
-        <Button
-          color="blue"
-          onClick={() => navigate('/profile')} // Redirect to profile page
-        >
-          Lisää uusi osoite
-        </Button>
+        <div className="shopping-page-buttons">
+          <Button
+            color={Object.keys(cartItems).length === 0 ? 'red' : 'green'}
+            onClick={handleOrder}
+          >
+            Maksa
+          </Button>
+          <Button color="yellow" onClick={() => navigate('/profile')}>
+            Lisää uusi osoite
+          </Button>
+        </div>
       </div>
     </div>
   );
