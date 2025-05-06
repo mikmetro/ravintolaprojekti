@@ -14,6 +14,7 @@ function ShoppingCart() {
   const {cartItems, cartPrice, clearCart} = useCartContext();
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(-1);
+  const [deliveryType, setDeliveryType] = useState('nouto');
   const {placeOrder} = useOrder();
   const navigate = useNavigate();
 
@@ -24,17 +25,29 @@ function ShoppingCart() {
       if (addresses.length > 0) {
         setSelectedAddress(addresses[0].id);
       }
+
       setAddresses(addresses);
     })();
   }, []);
 
   const handleOrder = async () => {
     if (Object.keys(cartItems).length === 0) return;
-    const orderDetails = {
-      address: selectedAddress,
-      items: cartItems,
-      type: 'delivery',
-    };
+
+    // Define orderDetails based on deliveryType
+    const orderDetails =
+      deliveryType === 'toimitus'
+        ? {
+            address: selectedAddress,
+            items: cartItems,
+            type: 'delivery',
+          }
+        : {
+            address: selectedAddress, // need to be set even for pickup orders, since the backend requires it
+            items: cartItems,
+            type: 'pickup',
+          };
+
+    // Place the order
     const orderResult = await placeOrder(orderDetails);
     if (orderResult.statusCode === 201) {
       clearCart();
@@ -67,23 +80,47 @@ function ShoppingCart() {
         </tbody>
       </table>
       <div className="shopping-page-address">
-        <p>Toimitus osoite: </p>
         <select
+          name="deliverType"
+          id="deliveryType"
           className="shopping-page-address-dropdown"
-          value={selectedAddress}
-          onChange={(e) => setSelectedAddress(e.target.value)}
+          value={deliveryType}
+          onChange={(e) => setDeliveryType(e.target.value)}
         >
-          {addresses.map((address) => (
-            <option key={address.id} value={address.id}>
-              {address.street}, {address.postalcode} {address.city}
-            </option>
-          ))}
+          <option value="nouto">Nouto</option>
+          <option value="toimitus">Toimitus</option>
         </select>
+        {deliveryType === 'toimitus' && (
+          <>
+            <p className="shopping-page-address-text">Valitse toimitusosoite</p>
+
+            <select
+              className="shopping-page-address-dropdown"
+              value={selectedAddress}
+              onChange={(e) => setSelectedAddress(e.target.value)}
+            >
+              {addresses.map((address) => (
+                <option key={address.id} value={address.id}>
+                  {address.street}, {address.postalcode} {address.city}
+                </option>
+              ))}
+            </select>
+          </>
+        )}
       </div>
       <div className="shopping-page-total">
         <h2>Total: {cartPrice.toFixed(2)}€</h2>
-        <Button color="green" onClick={handleOrder}>
+        <Button
+          color={Object.keys(cartItems).length === 0 ? 'red' : 'green'}
+          onClick={handleOrder}
+        >
           Maksa
+        </Button>
+        <Button
+          color="blue"
+          onClick={() => navigate('/profile')} // Redirect to profile page
+        >
+          Lisää uusi osoite
         </Button>
       </div>
     </div>
