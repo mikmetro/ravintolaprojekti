@@ -12,7 +12,7 @@ export default function Register() {
     password: '',
   });
   const navigate = useNavigate();
-  const {handleRegister, user} = useUserContext();
+  const {handleRegister} = useUserContext();
 
   const handleFormInput = (key, value) =>
     setFormFields({...formFields, [key]: value});
