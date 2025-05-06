@@ -4,6 +4,7 @@ import {useState} from 'react';
 import CartSideMenu from './CartSideMenu';
 import useUserContext from '../hooks/contextproviders/useUserContext';
 import {Link} from 'react-router-dom';
+import logo from '../../assets/logo.png';
 
 export default function Header() {
   const [sideMenuOpen, setSideMenuOpen] = useState();
@@ -14,7 +15,7 @@ export default function Header() {
   return (
     <header>
       <Link className="header-logo-wrapper" to="/">
-        <img className="header-logo" src="assets/logo.png" />
+        <img className="header-logo" src={logo} alt="Logo" />
       </Link>
       <Link className="header-link" to="/menu">
         Ruokalista
