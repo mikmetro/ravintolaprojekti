@@ -67,7 +67,7 @@ function ShoppingCart() {
         <tbody>
           {Object.values(cartItems).length === 0 ? ( // If cart is empty
             <tr>
-              <td colSpan="3">No items in cart</td>
+              <td colSpan="3">Ei tuotteita ostoskorissa</td>
             </tr>
           ) : (
             // If cart is not empty
