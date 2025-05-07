@@ -1,10 +1,23 @@
 # Ravintola projekti
 
-Tämä projekti esittää pizzerian sivustoa jossa kirjautuneet käyttäjät voivat tehdä tilauksia ja ravintolan työntekijät voivat hallinnoida tilauksia ja ruokalistaa
+## Tekijät
+- Wissam Al-Dabbagh
+- Teemu Erkkilä
+- Mikko Varis
+- Veeti Vänttinen
+- Patrik Skogberg
+
+## Sovelluksen idea ja kohderyhmä
+
+Tämä projekti on nettisivusto ja palvelin pizzerialle, jossa kirjautuneet käyttäjät voivat tehdä tilauksia ja ravintolan työntekijät voivat hallinnoida tilauksia ja ruokalistaa.
+
 [Sivustolle](https://ravintolaprojekti-nypa.onrender.com/)
+
 [Kyselyyn](https://docs.google.com/forms/d/e/1FAIpQLSdGwJ_r3ivl5jYLFoREXkm94evnjhNV5--gl4OqEmXgtLreNQ/viewform?usp=header)
 
-## Menusivun ominausuudet/ohjeet
+
+
+## Menusivun ominaisuudet/ohjeet
 
 - Näet ruokien nimet, kuvaukset ja hinnat
 - Voit lisätä tai poistaa tuotteita ostoskorista
