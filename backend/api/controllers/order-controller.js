@@ -30,23 +30,38 @@ const placeOrder = async (req, res, next) => {
 
     const userId = req.user.id;
 
-    const userAddress = await findAddressById(address);
+    // Handle address fields only if the type is "delivery"
+    console.log("type", type);
+    let addressDetails = {};
+    if (type === "delivery") {
+      const userAddress = await findAddressById(address);
 
-    if (!userAddress || userAddress.user_id !== userId) {
-      res.status(404).json({
-        message: "Address not found!",
-      });
+      if (!userAddress || userAddress.user_id !== userId) {
+        return res.status(404).json({
+          message: "Address not found!",
+        });
+      }
+
+      addressDetails = {
+        country: userAddress.country,
+        city: userAddress.city,
+        postalcode: userAddress.postalcode,
+        street: userAddress.street,
+        doorCode: userAddress.door_code,
+      };
+    } else {
+      addressDetails = {
+        country: null,
+        city: null,
+        postalcode: null,
+        street: null,
+        doorCode: null,
+      };
     }
-
-    const { country, city, postalcode, street, door_code } = userAddress;
 
     const result = await createOrder({
       userId,
-      country,
-      city,
-      postalcode,
-      street,
-      doorCode: door_code,
+      ...addressDetails,
       subTotal,
       discount,
       fee,

@@ -41,7 +41,7 @@ function ShoppingCart() {
             type: 'delivery',
           }
         : {
-            address: selectedAddress, // need to be set even for pickup orders, since the backend requires it
+            address: 0, // need to be set even for pickup orders, since the backend requires it
             items: cartItems,
             type: 'pickup',
           };
