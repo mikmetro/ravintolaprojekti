@@ -1,4 +1,4 @@
-# Ravintola projekti
+# Ravintola-projekti
 
 ## Tekijät
 - Wissam Al-Dabbagh
