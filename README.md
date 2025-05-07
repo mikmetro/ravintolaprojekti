@@ -58,8 +58,8 @@ Sivusto on suunnattu pienille ja keskikokoisille ravintoloille, jotka toimittava
 
 # Testaus
 
-[Sivustolle]([https://ravintolaprojekti-nypa.onrender.com/)
-
+[Sivustolle](https://ravintolaprojekti-nypa.onrender.com/)
+                 
 [Backup](https://users.metropolia.fi/~teemuerk/WebSovellusKehitys25k/GroupProject/)
 
 [Kyselyyn](https://docs.google.com/forms/d/e/1FAIpQLSdGwJ_r3ivl5jYLFoREXkm94evnjhNV5--gl4OqEmXgtLreNQ/viewform?usp=header)
