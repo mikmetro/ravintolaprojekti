@@ -4,6 +4,7 @@ header {
   gap: 1em;
   background: #eee;
   position: relative;
+  flex-wrap: wrap;
 }
 
 .header-logo {
@@ -75,6 +76,7 @@ header {
   display: flex;
   flex-direction: column;
   font-family: 'Montserrat';
+  z-index: 999;
 }
 
 .header-cartmenu.open {

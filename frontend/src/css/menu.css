@@ -20,6 +20,10 @@
   padding-top: 0.2em;
 }
 
+.menu-category-items > button {
+  width: fit-content;
+}
+
 .menu-item {
   display: flex;
   gap: 1em;
@@ -28,6 +32,7 @@
 .menu-item-name {
   font-size: 1.2rem;
   font-weight: 600;
+  word-break: break-all;
 }
 
 .menu-item-price {
@@ -41,6 +46,7 @@
   font-size: 1rem;
   font-style: italic;
   color: #777;
+  word-break: break-all;
 }
 
 .menu-category-title {
@@ -108,4 +114,18 @@
 .menu-loading-text {
   text-align: center;
   font-size: 2.2rem;
+}
+
+@media (max-width: 800px) {
+  .menu-category-items {
+    grid-template-rows: repeat(2, auto);
+  }
+
+  .menu-category-items > div {
+    grid-column: 1/4;
+  }
+
+  .menu-category-items > button {
+    grid-column: 3;
+  }
 }
