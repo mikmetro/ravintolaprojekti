@@ -86,7 +86,7 @@ const UserProvider = ({children}) => {
   const refreshUser = async () => {
     const tokenResult = await checkCurrentToken();
     if (tokenResult.statusCode === 200) setUser(tokenResult.user);
-    if (tokenResult.statusCode === 401) {
+    else {
       localStorage.removeItem('token');
       setUser(null);
       navigate('/login');

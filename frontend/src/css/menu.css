@@ -104,3 +104,8 @@
   font-size: 1.3rem;
   font-weight: 400;
 }
+
+.menu-loading-text {
+  text-align: center;
+  font-size: 2.2rem;
+}

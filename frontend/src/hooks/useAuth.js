@@ -3,7 +3,10 @@ async function fetchAuthData(endpoint, options = {}) {
     `${import.meta.env.VITE_AUTH_API}${endpoint}`,
     options
   );
-  const json = await response.json();
+  let json = {};
+  try {
+    json = await response.json();
+  } catch {}
   json.statusCode = response.status;
   return json;
 }
