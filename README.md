@@ -1,6 +1,8 @@
 # Ravintola projekti
 
-Tämä projekti esittää pizzeriaa jossa kirjautuneet käyttäjät voivat tehdä tilauksia.
+Tämä projekti esittää pizzerian sivustoa jossa kirjautuneet käyttäjät voivat tehdä tilauksia ja ravintolan työntekijät voivat hallinnoida tilauksia ja ruokalistaa
+[Sivustolle](https://ravintolaprojekti-nypa.onrender.com/)
+[Kyselyyn](https://docs.google.com/forms/d/e/1FAIpQLSdGwJ_r3ivl5jYLFoREXkm94evnjhNV5--gl4OqEmXgtLreNQ/viewform?usp=header)
 
 ## Menusivun ominausuudet/ohjeet
 
