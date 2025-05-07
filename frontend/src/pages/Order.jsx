@@ -2,7 +2,9 @@ import {useParams} from 'react-router-dom';
 import {useOrder} from '../hooks/useOrder';
 import {useEffect, useState} from 'react';
 import {FaRegClock, FaTruck, FaCheck} from 'react-icons/fa6';
+import {ImCross} from 'react-icons/im';
 import {BsBoxArrowUpRight} from 'react-icons/bs';
+import {TbPackageExport} from 'react-icons/tb';
 import '../css/order.css';
 
 export default function Order() {
@@ -23,7 +25,7 @@ export default function Order() {
       clearInterval(orderInfoInterval);
     };
   }, []);
-  console.log('orderInfo', orderInfo);
+
   if (orderInfo)
     return (
       <section className="order-wrapper">
@@ -39,17 +41,34 @@ export default function Order() {
               <h1>Tilaustasi valmistellaan</h1>
             </>
           ) : orderInfo.status === 'delivering' ? (
-            <>
-              <FaTruck className="order-status-icon" />
-              <h1>Tilaustasi toimitetaan</h1>
-            </>
+            orderInfo.type === 'delivery' ? (
+              <>
+                <FaTruck className="order-status-icon" />
+                <h1>Tilaustasi toimitetaan</h1>
+              </>
+            ) : (
+              <>
+                <TbPackageExport className="order-status-icon" />
+                <h1>Tilauksesi on noudettavissa</h1>
+              </>
+            )
           ) : orderInfo.status === 'completed' ? (
-            <>
-              <FaCheck className="order-status-icon" />
-              <h1>Tilauksesi on toimitettu</h1>
-            </>
+            orderInfo.type === 'delivery' ? (
+              <>
+                <FaCheck className="order-status-icon" />
+                <h1>Tilauksesi on toimitettu</h1>
+              </>
+            ) : (
+              <>
+                <FaCheck className="order-status-icon" />
+                <h1>Tilauksesi on noudettu</h1>
+              </>
+            )
           ) : (
-            <p></p>
+            <>
+              <ImCross className="order-status-icon" />
+              <h1>Tilauksesi on peruttu</h1>
+            </>
           )}
         </div>
         <div className="order-information">
